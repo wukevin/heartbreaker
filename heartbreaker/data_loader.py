@@ -6,11 +6,10 @@ Therefore, the data will have be grouped by identifiers that consist of STATE,CO
 """
 import os
 import sys
-import re
 import logging
+import glob
 import collections
 
-import numpy as np
 import pandas as pd
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
@@ -18,6 +17,8 @@ assert os.path.isdir(DATA_DIR), "Cannot find data directory: {}".format(DATA_DIR
 
 HEART_DISEASE_FPATH = os.path.join(DATA_DIR, "CDC_heart_disease_mortality/Heart_Disease_Mortality_Data_Among_US_Adults_35_plus_by_State_Territory_and_County.csv")
 assert os.path.isfile(HEART_DISEASE_FPATH)
+USDA_FOOD_ATLAS_DIR = os.path.join(DATA_DIR, "USDA_food_environment_atlas")
+assert os.path.isdir(USDA_FOOD_ATLAS_DIR)
 
 def determine_most_prevalent(x):
     """Given an iterable, find the most common element"""
@@ -38,7 +39,7 @@ def homogenize_state_abbrev(state_abbrev):
     assert len(state_abbrev) == 2
     return state_abbrev.upper()  # Return uppercase
 
-def load_heart_disease_table(fname=HEART_DISEASE_FPATH, genders=["Overall"]):
+def load_heart_disease_table(fname=HEART_DISEASE_FPATH):
     """
     Load in the heart disease table and return a DataFrame with index values of STATE|county
     For now, we are discarding all data that is:
@@ -106,10 +107,29 @@ def load_usda_food_env_table(fname):
 
     return df
 
+def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR):
+    """
+    Loads in all the data and joins them, returning a pandas dataframe where each row is a county
+    and columns represent measurements of a certain feature.
+    """
+    # Everything is inner joined starting from here
+    logging.info("Reading in {}".format(heart_disease_fname))
+    heart_disease_df = load_heart_disease_table(heart_disease_fname)
+
+    # Read in the food env data and perform inner joins on our unified county identifier
+    for match in glob.glob(os.path.join(usda_food_env_folder, "*.csv")):  # Query for all the csv files
+        if os.path.basename(match).startswith("supplemental") or os.path.basename(match) == "variable_list.csv":
+            continue  # Skip certain files
+        logging.info("Reading in {}".format(match))
+        df = load_usda_food_env_table(match)
+        # Update the heart disease dataframe with the result of the inner join
+        heart_disease_df = pd.merge(heart_disease_df, df, 'inner', left_index=True, right_index=True)
+
+    return heart_disease_df
+
 def main():
     """Mostly for on the fly testing"""
-    # print(load_heart_disease_table())
-    print(load_usda_food_env_table(os.path.join(DATA_DIR, "USDA_food_environment_atlas/stores.csv")))
+    print(load_all_data())
 
 if __name__ == "__main__":
     main()
