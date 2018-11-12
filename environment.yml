@@ -37,6 +37,7 @@ dependencies:
   - python-dateutil=2.7.5=py36_0
   - pytz=2018.7=py36_0
   - readline=7.0=h1de35cc_5
+  - scikit-learn=0.20.0=py36h4f467ca_1
   - scipy=1.1.0=py36h28f7352_1
   - setuptools=40.5.0=py36_0
   - six=1.11.0=py36_1
