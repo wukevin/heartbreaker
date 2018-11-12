@@ -40,7 +40,7 @@ def homogenize_state_abbrev(state_abbrev):
 
 def load_heart_disease_table(fname=HEART_DISEASE_FPATH, genders=["Overall"]):
     """
-    Load in the heart disease table and return a DataFrame
+    Load in the heart disease table and return a DataFrame with index values of STATE|county
     For now, we are discarding all data that is:
     - Stratified by race or by gender
     - Marked as "Insufficient Data"
@@ -77,9 +77,39 @@ def load_heart_disease_table(fname=HEART_DISEASE_FPATH, genders=["Overall"]):
     )
     return retval
 
+def load_usda_food_env_table(fname):
+    """
+    General function for reading in any of the csv files that come from the USDA food
+    environment atlas (excluding the supplementary tables). In doing so, it drops all
+    non-numeric data. As a data cleaning measure, we also drop all instances of any county
+    that shows up more than once.
+    """
+    if os.path.basename(fname).startswith("supplemental"):
+        raise NotImplementedError("Cannot read supplemental tables")
+    df = pd.read_csv(fname, engine='c', low_memory=False)
+
+    # Reindex according to our unified county naming scheme
+    homogenized_identifiers = ["|".join([homogenize_state_abbrev(row['State']), homogenize_county_name(row['County'])]) for _i, row in df.iterrows()]
+    assert len(homogenized_identifiers) == df.shape[0]
+    df.index = homogenized_identifiers
+    
+    # Find duplicated rows and drop them
+    dup_counter = collections.Counter(homogenized_identifiers)
+    duplicated = [identifier for identifier, count in dup_counter.most_common() if count > 1]
+    df.drop(index=duplicated, inplace=True)
+    assert all([dup not in df.index for dup in duplicated])  # Sanity check
+    
+    # Drop any data that is not numeric (including old state/county labels)
+    df.drop(columns=df.select_dtypes(exclude='number'), inplace=True)
+    if "FIPS" in df.columns:  # Needs special handling because this will appear numeric
+        df.drop(columns='FIPS', inplace=True)
+
+    return df
+
 def main():
     """Mostly for on the fly testing"""
-    print(load_heart_disease_table())
+    # print(load_heart_disease_table())
+    print(load_usda_food_env_table(os.path.join(DATA_DIR, "USDA_food_environment_atlas/stores.csv")))
 
 if __name__ == "__main__":
     main()
