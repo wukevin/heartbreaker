@@ -2,6 +2,7 @@
 General utility functions for working with data
 """
 import itertools
+import logging
 
 import numpy as np
 import pandas as pd
@@ -52,7 +53,7 @@ def split_test_train_k_fold(full_x, full_y, k=10, seed=754927):
         y_test_sub = full_y[test_indices]
         x_train_sub = full_x.iloc[train_indices].copy()
         y_train_sub = full_y[train_indices]
-        print("K-fold {}: {}|{} testing {}|{} training".format(i, np.sum(y_test_sub), x_test_sub.shape[0], np.sum(y_train_sub), x_train_sub.shape[0]))
+        logging.info("K-fold {}: {}|{} testing {}|{} training".format(i, np.sum(y_test_sub), x_test_sub.shape[0], np.sum(y_train_sub), x_train_sub.shape[0]))
         partitions.append((x_train_sub, y_train_sub, x_test_sub, y_test_sub))
     assert len(partitions) == k  # Make sure we've generated the right number of partitions
     # Make sure we have included ALL the data as test data in one cycle or another
