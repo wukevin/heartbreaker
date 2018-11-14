@@ -1,7 +1,7 @@
 """
 Code for a linear regression as a very basic baseline
 
-When executed, prints out the R^2 value and the MSE values
+When executed, prints out the R^2 value and the MSE values to stderr
 """
 
 import os
