@@ -28,34 +28,61 @@ def isnumeric(x):
     except TypeError:
         return False
 
-def split_test_train_k_fold(full_x, full_y, k=10, seed=754927):
+def continuous_to_categorical(values, percentile_cutoff=75):
     """
-    Split the data into k different partitions of testing and training data, where each partition
-    is returned as a tuple of (x_train, y_train, x_test, y_test); these tuples are then returned
-    in a list of length k
+    Take a 1-dimensional vector of values and return a vector of the same size
+    with 0/1 indicating low or high values according to a given percentile
+    cutoff. Note that a percentile_cutoff of 75 will give you 1 values for the
+    top 25%, and a percentile_cutoff of 90 will give you 1 values for the top 10%
     """
+    x = np.array(values)
+    assert x.ndim == 1
+    cutoff = np.nanpercentile(x, percentile_cutoff)
+    categories = x >= cutoff
+    print(np.sum(categories), len(categories))
+    return categories
+
+def split_train_valid_k_fold(full_x, full_y, k=10, testing_holdout=0.1, seed=754927):
+    """
+    Split the data into k different partitions of training/validation, holding out test data, where each partition
+    is returned as a tuple of (x_train, y_train, x_valid, y_valid); these tuples are then returned
+    in a list of length. The second return value of this function is a tuple of (x_test, y_test)
+    """
+    assert 0 <= testing_holdout < 1, "Testing holdout must be a proportion"
     assert full_x.shape[0] == len(full_y)
     np.random.seed(seed)
+
+    # Create a list of indices and shuffle them
     shuf_indices = np.arange(0, len(full_y), dtype=int)
     assert len(shuf_indices) == len(full_y)
     np.random.shuffle(shuf_indices)  # Shuffle in place
+
+    # Create a batch of testing indices that is never include in the train/validation rotation
+    testing_holdout_count = int(np.round(testing_holdout * len(full_y)))
+    testing_indices = shuf_indices[:testing_holdout_count]  # Takes the first few shuffled indices
+    shuf_indices = shuf_indices[testing_holdout_count:]
+
     partition_size = int(np.ceil(len(shuf_indices) / k))
     partitions = []
-    test_indices_record = []
+    validation_indices_record = []
     for i in range(k):
         lower = partition_size*i
         upper = lower+partition_size
-        test_indices = shuf_indices[lower:upper]
-        test_indices_record.append(test_indices)
-        train_indices = [i for i in shuf_indices if i not in test_indices]
-        assert not set(test_indices).intersection(set(train_indices))  # Sanity check
-        x_test_sub = full_x.iloc[test_indices].copy()
-        y_test_sub = full_y[test_indices]
+        validation_indices = shuf_indices[lower:upper]
+        validation_indices_record.append(validation_indices)
+        train_indices = [i for i in shuf_indices if i not in validation_indices]
+        assert not set(validation_indices).intersection(set(train_indices))  # Sanity check
+        x_valid_sub = full_x.iloc[validation_indices].copy()
+        y_valid_sub = full_y[validation_indices]
         x_train_sub = full_x.iloc[train_indices].copy()
         y_train_sub = full_y[train_indices]
-        logging.info("K-fold {}: {}|{} testing {}|{} training".format(i, np.sum(y_test_sub), x_test_sub.shape[0], np.sum(y_train_sub), x_train_sub.shape[0]))
-        partitions.append((x_train_sub, y_train_sub, x_test_sub, y_test_sub))
+        logging.info("K-fold {}: {} testing {} training".format(i, x_valid_sub.shape, x_train_sub.shape))
+        partitions.append((x_train_sub, y_train_sub, x_valid_sub, y_valid_sub))
     assert len(partitions) == k  # Make sure we've generated the right number of partitions
     # Make sure we have included ALL the data as test data in one cycle or another
-    assert len(set(itertools.chain.from_iterable(test_indices_record))) == len(full_y)
-    return partitions
+    assert len(set(itertools.chain.from_iterable(validation_indices_record))) == len(full_y) - testing_holdout_count
+
+    # Create the testing dataset
+    testing_pair = (full_x.iloc[testing_indices], full_y[testing_indices])
+
+    return partitions, testing_pair
