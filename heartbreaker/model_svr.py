@@ -35,7 +35,7 @@ def main():
     """Run the script"""
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
-    partitions = util.split_test_train_k_fold(data, rates)
+    partitions, test_set = util.split_test_train_k_fold(data, rates)
     logging.info("Running MSE on first partition")
     first_set = partitions[0]
     mse = svr(*first_set)
