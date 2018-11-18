@@ -104,6 +104,15 @@ def load_usda_food_env_table(fname):
     df.drop(columns=df.select_dtypes(exclude='number'), inplace=True)
     if "FIPS" in df.columns:  # Needs special handling because this will appear numeric
         df.drop(columns='FIPS', inplace=True)
+        
+    # Drop any data that is observed AFTER our heart disease data (2014)
+    future_knowledge_cols = []
+    for column in df.columns:
+        year = int(column[-2:])
+        if (year > 14):
+            future_knowledge_cols.append(column)
+                
+    df.drop(columns=future_knowledge_cols, inplace=True)
 
     return df
 
