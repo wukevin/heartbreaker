@@ -28,6 +28,20 @@ def isnumeric(x):
     except TypeError:
         return False
 
+def continuous_to_categorical(values, percentile_cutoff=75):
+    """
+    Take a 1-dimensional vector of values and return a vector of the same size
+    with 0/1 indicating low or high values according to a given percentile
+    cutoff. Note that a percentile_cutoff of 75 will give you 1 values for the
+    top 25%, and a percentile_cutoff of 90 will give you 1 values for the top 10%
+    """
+    x = np.array(values)
+    assert x.ndim == 1
+    cutoff = np.nanpercentile(x, percentile_cutoff)
+    categories = x >= cutoff
+    print(np.sum(categories), len(categories))
+    return categories
+
 def split_train_valid_k_fold(full_x, full_y, k=10, testing_holdout=0.1, seed=754927):
     """
     Split the data into k different partitions of training/validation, holding out test data, where each partition
