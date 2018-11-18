@@ -6,6 +6,7 @@ When executed, prints out the R^2 value and the MSE values to stderr
 
 import os
 import sys
+import multiprocessing
 import logging
 
 import numpy as np
@@ -36,9 +37,15 @@ def main():
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
     partitions, test_set = util.split_train_valid_k_fold(data, rates)
-    logging.info("Running MSE on first partition")
-    first_set = partitions[0]
-    mse = svr(*first_set)
+    
+    # Evaluate in parallel
+    pool = multiprocessing.Pool(multiprocessing.cpu_count())
+    mse_values = pool.starmap(svr, partitions)
+    pool.close()
+    pool.join()
+
+    # Average the results
+    logging.info("Average of {} cross validation runs: {}".format(len(mse_values), np.mean(mse_values)))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
