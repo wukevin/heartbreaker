@@ -70,16 +70,16 @@ def main():
     models = []
     
     logistic = LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear')
-    models.append(logistic)
+    models.append((logistic, True))
     
     dt = DecisionTreeClassifier(min_samples_leaf=.01) #gini loss
-    models.append(dt)
+    models.append((dt, False))
     
     rf = RandomForestClassifier(n_estimators=100, min_samples_leaf=.01, bootstrap=True)
-    models.append(rf)
+    models.append((rf, False))
     
-    for model in models:
-        classification(model, x_train, y_train, seed)
+    for (model, scale) in models:
+        classification(model, x_train, y_train, seed, scale=scale)
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
