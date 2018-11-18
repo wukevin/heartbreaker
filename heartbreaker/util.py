@@ -39,7 +39,7 @@ def continuous_to_categorical(values, percentile_cutoff=75):
     assert x.ndim == 1
     cutoff = np.nanpercentile(x, percentile_cutoff)
     categories = x >= cutoff
-    print(np.sum(categories), len(categories))
+    logging.info("Categorized {} of {} values as high".format(np.sum(categories), len(categories)))
     return categories
 
 def split_train_valid_k_fold(full_x, full_y, k=10, testing_holdout=0.1, seed=754927):
