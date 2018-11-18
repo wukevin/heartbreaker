@@ -30,7 +30,7 @@ def main():
     """Run the script"""
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
-    train_validation_partitions, test_set = util.split_test_train_k_fold(data, rates)
+    train_validation_partitions, test_set = util.split_train_valid_k_fold(data, rates)
     logging.info("Running MSE on first partition")
     first_set = train_validation_partitions[0]
     mse = least_squares(*first_set)

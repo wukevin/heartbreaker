@@ -76,7 +76,7 @@ def split_train_valid_k_fold(full_x, full_y, k=10, testing_holdout=0.1, seed=754
         y_valid_sub = full_y[validation_indices]
         x_train_sub = full_x.iloc[train_indices].copy()
         y_train_sub = full_y[train_indices]
-        logging.info("K-fold {}: {}|{} testing {}|{} training".format(i, np.sum(y_valid_sub), x_valid_sub.shape[0], np.sum(y_train_sub), x_train_sub.shape[0]))
+        logging.info("K-fold {}: {} testing {} training".format(i, x_valid_sub.shape, x_train_sub.shape))
         partitions.append((x_train_sub, y_train_sub, x_valid_sub, y_valid_sub))
     assert len(partitions) == k  # Make sure we've generated the right number of partitions
     # Make sure we have included ALL the data as test data in one cycle or another
