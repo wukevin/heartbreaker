@@ -12,8 +12,10 @@ import logging
 import numpy as np
 import pandas as pd
 import sklearn
-import sklearn.linear_model
 from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 import data_loader
 import util
@@ -29,6 +31,7 @@ from sklearn.metrics import make_scorer
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.model_selection import cross_validate, train_test_split, KFold
 from sklearn.pipeline import Pipeline
+
 
 seed = 754927
 
@@ -64,9 +67,19 @@ def main():
     
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.10, random_state=seed)
     
-    model = sklearn.linear_model.LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear')
+    models = []
     
-    classification(model, x_train, y_train, seed)
+    logistic = LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear')
+    models.append(logistic)
+    
+    dt = DecisionTreeClassifier(min_samples_leaf=.01) #gini loss
+    models.append(dt)
+    
+    rf = RandomForestClassifier(n_estimators=100, min_samples_leaf=.01, bootstrap=True)
+    models.append(rf)
+    
+    for model in models:
+        classification(model, x_train, y_train, seed)
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
