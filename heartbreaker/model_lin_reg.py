@@ -22,10 +22,11 @@ def least_squares(x_train, y_train, x_test, y_test):
     model = sklearn.linear_model.LinearRegression(fit_intercept=True, normalize=False, copy_X=True, n_jobs=-1)
     model.fit(x_train, y_train)
     predictions = model.predict(x_test)
-    logging.info("Linear regression R^2 value: {}".format(model.score(x_test, y_test)))
+    r_squared = model.score(x_test, y_test)
+    logging.info("Linear regression R^2 value: {}".format(r_squared))
     mse = sklearn.metrics.mean_squared_error(y_test, predictions)
     logging.info("Linear regression MSE: {}".format(mse))
-    return mse
+    return mse, r_squared
 
 def main():
     """Run the script"""
@@ -35,12 +36,14 @@ def main():
 
     # Evaluate on the training/validation partitions in parallel
     pool = multiprocessing.Pool(multiprocessing.cpu_count())
-    mse_values = pool.starmap(least_squares, train_validation_partitions)
+    values = pool.starmap(least_squares, train_validation_partitions)  # Contains mse and r2
     pool.close()
     pool.join()
 
     # Average the results
-    logging.info("Average of {} cross validation runs: {}".format(len(mse_values), np.mean(mse_values)))
+    mse_values, rsquared_values = [list(x) for x in zip(*values)]
+    logging.info("Average MSE of {} cross validation runs: {}".format(len(mse_values), np.mean(mse_values)))
+    logging.info("Average R^2 of {} cross validation runs: {}".format(len(rsquared_values), np.mean(rsquared_values)))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

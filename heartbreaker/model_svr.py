@@ -26,11 +26,11 @@ def svr(x_train, y_train, x_test, y_test):
     model.fit(x_train, y_train)
     x_test = pd.DataFrame(scaler.transform(x_test), columns=x_test.columns)
     predictions = model.predict(x_test)
-    logging.info("SVR R^2 value: {}".format(model.score(x_test, y_test)))
-    print(model.score(x_test, y_test))
+    r_squared = model.score(x_test, y_test)
+    logging.info("SVR R^2 value: {}".format(r_squared))
     mse = sklearn.metrics.mean_squared_error(y_test, predictions)
     logging.info("SVR MSE: {}".format(mse))
-    return mse
+    return mse, r_squared
 
 def main():
     """Run the script"""
@@ -40,12 +40,14 @@ def main():
     
     # Evaluate in parallel
     pool = multiprocessing.Pool(multiprocessing.cpu_count())
-    mse_values = pool.starmap(svr, partitions)
+    values = pool.starmap(svr, partitions)
     pool.close()
     pool.join()
 
     # Average the results
-    logging.info("Average of {} cross validation runs: {}".format(len(mse_values), np.mean(mse_values)))
+    mse_values, rsquared_values = [list(x) for x in zip(*values)]
+    logging.info("Average MSE of {} cross validation runs: {}".format(len(mse_values), np.mean(mse_values)))
+    logging.info("Average R^2 of {} cross validation runs: {}".format(len(rsquared_values), np.mean(rsquared_values)))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
