@@ -60,6 +60,7 @@ def split_train_valid_k_fold(full_x, full_y, k=10, testing_holdout=0.1, seed=754
     # Create a batch of testing indices that is never include in the train/validation rotation
     testing_holdout_count = int(np.round(testing_holdout * len(full_y)))
     testing_indices = shuf_indices[:testing_holdout_count]  # Takes the first few shuffled indices
+    logging.info("Holding out {} indices for testing".format(len(testing_indices)))
     shuf_indices = shuf_indices[testing_holdout_count:]
 
     partition_size = int(np.ceil(len(shuf_indices) / k))
