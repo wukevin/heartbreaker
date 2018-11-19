@@ -38,6 +38,7 @@ def continuous_to_categorical(values, percentile_cutoff=75):
     x = np.array(values)
     assert x.ndim == 1
     cutoff = np.nanpercentile(x, percentile_cutoff)
+    logging.info("{} percentile correspond to a value of {}".format(percentile_cutoff, cutoff))
     categories = x >= cutoff
     logging.info("Categorized {} of {} values as high".format(np.sum(categories), len(categories)))
     return categories
