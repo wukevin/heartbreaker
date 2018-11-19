@@ -39,7 +39,7 @@ def continuous_to_categorical(values, percentile_cutoff=75):
     assert x.ndim == 1
     cutoff = np.nanpercentile(x, percentile_cutoff)
     categories = x >= cutoff
-    print(np.sum(categories), len(categories))
+    logging.info("Categorized {} of {} values as high".format(np.sum(categories), len(categories)))
     return categories
 
 def split_train_valid_k_fold(full_x, full_y, k=10, testing_holdout=0.1, seed=754927):
@@ -60,6 +60,7 @@ def split_train_valid_k_fold(full_x, full_y, k=10, testing_holdout=0.1, seed=754
     # Create a batch of testing indices that is never include in the train/validation rotation
     testing_holdout_count = int(np.round(testing_holdout * len(full_y)))
     testing_indices = shuf_indices[:testing_holdout_count]  # Takes the first few shuffled indices
+    logging.info("Holding out {} indices for testing".format(len(testing_indices)))
     shuf_indices = shuf_indices[testing_holdout_count:]
 
     partition_size = int(np.ceil(len(shuf_indices) / k))
