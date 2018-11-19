@@ -23,11 +23,10 @@ def xgb(x_train, y_train, x_test, y_test, depth=6, n_est=250):
     depth = 3
     n_est = 100
     """
-    # Learning rate is default 0.1
+    # Learning rate is by default 0.1 (we use 0.01 here)
     model = xgboost.XGBClassifier(max_depth=depth, learning_rate=1e-2, n_estimators=n_est, random_state=8292)
     logging.debug("Training XGBoost classifier with parameters depth={} n_estimators={}".format(depth, n_est))
     model.fit(x_train, y_train)
-    # print(model)
     y_pred = model.predict(x_test)
     f1 = sklearn.metrics.f1_score(y_test, y_pred)
     accuracy = sklearn.metrics.accuracy_score(y_test, y_pred)
@@ -35,7 +34,8 @@ def xgb(x_train, y_train, x_test, y_test, depth=6, n_est=250):
     recall = sklearn.metrics.recall_score(y_test, y_pred)
     return accuracy, precision, recall, f1
 
-def main(percentile=25):
+def cross_validate_and_tune_params(percentile=25):
+    """Run cross validation to tune hyperparameters for the model"""
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
     rates_high_low = util.continuous_to_categorical(rates, 100 - percentile)
@@ -67,4 +67,4 @@ def main(percentile=25):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    main()
+    cross_validate_and_tune_params()
