@@ -30,5 +30,15 @@ def main():
     
     histogram(data['heart_disease_mortality'], "Rate per 100,000 population", "Heart disease mortality rates", os.path.join(PLOTS_DIR, "mortality_histogram.png"))
 
+    histogram(data['PC_FSRSALES07'], "Dollars", "Expenditures per capita, restaurants, 2007", os.path.join(PLOTS_DIR, "restaurants_per_capita_hist.png"))
+    print(np.nanmin(data['PC_FSRSALES07']))
+    print(np.nanmedian(data['PC_FSRSALES07']))
+    print(np.nanmax(data['PC_FSRSALES07']))
+
+    histogram(data['VEG_FARMS12'], "Count", "Vegetable farms, 2012", os.path.join(PLOTS_DIR, "veg_farms_2012_hist.png"))
+    print(np.nanmin(data['VEG_FARMS12']))
+    print(np.nanmedian(data['VEG_FARMS12']))
+    print(np.nanmax(data['VEG_FARMS12']))
+
 if __name__ == "__main__":
     main()
