@@ -26,7 +26,13 @@ def least_squares(x_train, y_train, x_test, y_test):
     logging.info("Linear regression R^2 value: {}".format(r_squared))
     mse = sklearn.metrics.mean_squared_error(y_test, predictions)
     logging.info("Linear regression MSE: {}".format(mse))
-    return mse, r_squared
+    preds_categorical = util.continuous_to_categorical(predictions, percentile_cutoff=None, numeric_cutoff=409)
+    truth_categorical = util.continuous_to_categorical(y_test, percentile_cutoff=None, numeric_cutoff=409)
+    precision = sklearn.metrics.precision_score(truth_categorical, preds_categorical)
+    recall = sklearn.metrics.recall_score(truth_categorical, preds_categorical)
+    logging.info("Linear regression categorized precision: {}".format(precision))
+    logging.info("Linear regression categorized recall: {}".format(recall))
+    return mse, r_squared, precision, recall
 
 def main():
     """Run the script"""
@@ -41,9 +47,11 @@ def main():
     pool.join()
 
     # Average the results
-    mse_values, rsquared_values = [list(x) for x in zip(*values)]
+    mse_values, rsquared_values, precision_values, recall_values = [list(x) for x in zip(*values)]
     logging.info("Average MSE of {} cross validation runs: {}".format(len(mse_values), np.mean(mse_values)))
     logging.info("Average R^2 of {} cross validation runs: {}".format(len(rsquared_values), np.mean(rsquared_values)))
+    logging.info("Average recall of {} cross validation runs: {}".format(len(recall_values), np.mean(recall_values)))
+    logging.info("Average precision of {} cross validation runs: {}".format(len(precision_values), np.mean(precision_values)))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

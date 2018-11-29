@@ -28,17 +28,29 @@ def isnumeric(x):
     except TypeError:
         return False
 
-def continuous_to_categorical(values, percentile_cutoff=75):
+def continuous_to_categorical(values, percentile_cutoff=75, numeric_cutoff=None):
     """
     Take a 1-dimensional vector of values and return a vector of the same size
-    with 0/1 indicating low or high values according to a given percentile
-    cutoff. Note that a percentile_cutoff of 75 will give you 1 values for the
-    top 25%, and a percentile_cutoff of 90 will give you 1 values for the top 10%
+    with 0/1 indicating low or high values according to a given percentile cutoff.
+    Cutoff can either be percentile or numeric but not both.
+    A percentile_cutoff of 75 will give you 1 values for the top 25%, and a
+    percentile_cutoff of 90 will give you 1 values for the top 10%
     """
+    assert percentile_cutoff is not None or numeric_cutoff is not None, "Must provide either a percentile or numeric cutoff"
+    if percentile_cutoff is not None and numeric_cutoff is not None:
+        raise NotImplementedError("Cannot provide both percentile and numeric cutoffs")
     x = np.array(values)
     assert x.ndim == 1
-    cutoff = np.nanpercentile(x, percentile_cutoff)
-    logging.info("{} percentile correspond to a value of {}".format(percentile_cutoff, cutoff))
+    
+    if not numeric_cutoff:
+        cutoff = np.nanpercentile(x, percentile_cutoff)
+        logging.info("{} percentile correspond to a value of {}".format(percentile_cutoff, cutoff))
+    else:
+        cutoff = numeric_cutoff
+        logging.info("Numeric cutoff {} corresponds to approximate percentile {}".format(
+            cutoff,
+            np.sum(x < cutoff) / len(x)
+        ))
     categories = x >= cutoff
     logging.info("Categorized {} of {} values as high".format(np.sum(categories), len(categories)))
     return categories
