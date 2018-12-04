@@ -93,7 +93,7 @@ def main(percentile=25):
     while x_train_old is not x_train:
         x_train_old = x_train
         x_test_old = x_test
-        x_train, x_test = feature_backwards_search(x_train, y_train, x_test, y_test, os.path.join(os.path.dirname(os.path.dirname(__file__)), "results/backward_searc_{}.csv".format(i)), LogisticRegression,
+        x_train, x_test = feature_backwards_search(x_train, y_train, x_test, y_test, os.path.join(os.path.dirname(os.path.dirname(__file__)), "results/backward_search_logreg_{}.csv".format(i)), LogisticRegression,
             solver='liblinear', class_weight='balanced', C=1, penalty='l1', random_state=98572, max_iter=1000)
         i += 1
 
