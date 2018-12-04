@@ -20,11 +20,14 @@ def fit_and_predict(model, x_train, y_train, x_test):
     model.fit(x_train, y_train)
     return model.predict(x_test)
 
-def feature_backwards_search(x_train, y_train, x_test, y_test, model, **kwargs):
+def feature_backwards_search(x_train, y_train, x_test, y_test, fname, model, **kwargs):
     """
     Do a depth-of-one feature backwards search. Does not assume that the input is standardized.
-    kwargs are paseed to the model initialization.
+    kwargs are passed to the model initialization. Returns versions of x_train and x_test with
+    the highest scores. If we can drop a column to improve performance, we drop it and return the
+    subset; if not, we simply return x_train and x_test as given.
     """
+    assert isinstance(fname, str)
     # Standardize
     sc = StandardScaler()
     x_train_std = sc.fit_transform(x_train)
@@ -53,6 +56,19 @@ def feature_backwards_search(x_train, y_train, x_test, y_test, model, **kwargs):
     dropped_scores = [sklearn.metrics.f1_score(y_test, preds) for preds in predictions]
     logging.info("Min and max scores after dropping features: {} {}".format(min(dropped_scores), max(dropped_scores)))
 
+    if fname:
+        raise NotImplementedError()  # Supposed to write out the relative importance here
+
+    # Drop column whose loss results in the largest improvement in performance
+    if max(dropped_scores) > baseline_score:
+        best_index_to_drop = np.argmax(dropped_scores)
+        best_column_to_drop = x_train.columns[best_index_to_drop]
+        logging.info("Dropping {}".format(best_column_to_drop))
+        x_train_sub = x_train.drop(columns=best_column_to_drop)
+        x_test_sub = x_test.drop(columns=best_column_to_drop)
+        return x_train_sub, x_test_sub
+    return x_train, x_test
+
 def main(percentile=25):
     """Execute script"""
     data = util.impute_by_col(data_loader.load_all_data())
@@ -62,7 +78,7 @@ def main(percentile=25):
 
     # Use the first split
     x_train, y_train, x_test, y_test = train_validation_partitions[0]
-    feature_backwards_search(x_train, y_train, x_test, y_test, LogisticRegression, solver='liblinear', class_weight='balanced')
+    feature_backwards_search(x_train, y_train, x_test, y_test, "", LogisticRegression, solver='liblinear', class_weight='balanced')
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
