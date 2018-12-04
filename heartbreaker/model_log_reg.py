@@ -78,7 +78,7 @@ def log_reg(x_train, y_train, x_test, y_test, c=1.0, fn_filename=""):
         columns=x_train.columns,
     )
     weights_labeled = pd.Series(np.ndarray.flatten(model.coef_), index=x_train.columns)
-    plot_overall_feature_contributions(fn_feature_matrix, weights_labeled, fn_filename)
+    # plot_overall_feature_contributions(fn_feature_matrix, weights_labeled, fn_filename)
 
     return accuracy, precision, recall, f1
 
@@ -91,13 +91,13 @@ def main(percentile=25):
     # Evaluate k fold in parallel and tune hyperparameters
     parameters = []
     metrics = []
-    reg_constant_candidates = [1]#[0.001, 0.01, 0.1, 1.0, 10.0, 100]
+    reg_constant_candidates = [0.01, 0.1, 1.0, 10.0, 100]
     pool = multiprocessing.Pool(multiprocessing.cpu_count())
     for reg_constant in reg_constant_candidates:
-        # performance_metrics = pool.starmap(log_reg, [part + (reg_constant, "/Users/kevin/Documents/Stanford/courses/cs229_heartbreaker/plots/logreg_kfold_{}.png".format(i)) for i, part in enumerate(train_validation_partitions)])
-        performance_metrics = itertools.starmap(log_reg, [part + (reg_constant, "/Users/kevin/Documents/Stanford/courses/cs229_heartbreaker/plots/logreg_kfold_fn_{}.png".format(i)) for i, part in enumerate(train_validation_partitions)])
+        performance_metrics = pool.starmap(log_reg, [part + (reg_constant, "/Users/kevin/Documents/Stanford/courses/cs229_heartbreaker/plots/logreg_kfold_{}.png".format(i)) for i, part in enumerate(train_validation_partitions)])
+        # performance_metrics = itertools.starmap(log_reg, [part + (reg_constant, "/Users/kevin/Documents/Stanford/courses/cs229_heartbreaker/plots/logreg_kfold_fn_{}.png".format(i)) for i, part in enumerate(train_validation_partitions)])
         overall = np.vstack(performance_metrics)
-        logging.info("Average logreg metrics with c={}: {}".format(reg_constant, np.mean(overall, axis=0)))
+        logging.info("Average logreg metrics with c={}:\t{}".format(reg_constant, np.mean(overall, axis=0)))
         parameters.append((reg_constant))
         metrics.append(np.mean(overall, axis=0))
     pool.close()
