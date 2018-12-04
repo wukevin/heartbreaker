@@ -7,6 +7,8 @@ import logging
 import numpy as np
 import pandas as pd
 
+from sklearn.preprocessing import StandardScaler
+
 def impute_by_col(df, replace=np.nanmedian):
     """Impute nan values in each row using the given replacement"""
     assert isinstance(df, pd.DataFrame)
@@ -100,3 +102,26 @@ def split_train_valid_k_fold(full_x, full_y, k=10, testing_holdout=0.1, seed=754
     testing_pair = (full_x.iloc[testing_indices], full_y[testing_indices])
 
     return partitions, testing_pair
+
+def cross_validate(partitions, model):
+    """
+    Perform cross validation with the partitions and the model
+    Model should already be instantiated and have a fit and predict method.
+    Returns two vectors of labels: predictions, truths
+    These can easily be fed into sklearn's metrics calculators
+    """
+    truth_nested = []
+    preds_nested = []
+    for partition in partitions:
+        x_train, y_train, x_test, y_test = partition  # Unpack
+        sc = StandardScaler()
+        x_train_std = sc.fit_transform(x_train)
+        x_test_std = sc.transform(x_test)
+
+        model.fit(x_train_std, y_train)
+        preds = model.predict(x_test_std)
+        preds_nested.append(preds)
+        truth_nested.append(y_test)
+    truth_flat = list(itertools.chain.from_iterable(truth_nested))
+    preds_flat = list(itertools.chain.from_iterable(preds_nested))
+    return truth_flat, preds_flat

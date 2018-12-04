@@ -77,7 +77,56 @@ def feature_backwards_search(x_train, y_train, x_test, y_test, fname, model, **k
         return x_train_sub, x_test_sub
     return x_train, x_test
 
-def main(percentile=25):
+def feature_forward_search(partitions, num_features, model, **kwargs):
+    """Performs forward search on features"""
+    def extract_features_from_partition(partition, feature_names):
+        """Given a single partition, recreate it with only the desired feature names"""
+        x_train, y_train, x_test, y_test = partition
+        x_train_sub = x_train.loc[:, feature_names]
+        x_test_sub = x_test.loc[:, feature_names]
+        assert x_train_sub.shape[1] == x_test_sub.shape[1] == len(feature_names)
+        return x_train_sub, y_train, x_test_sub, y_test
+
+    all_feature_names = list(partitions[0][0].columns)
+    selected_feature_names = []
+    selected_feature_scores = []
+
+    pool = multiprocessing.Pool(multiprocessing.cpu_count())
+    while len(selected_feature_names) < min(num_features, len(all_feature_names)):
+        # Define which features we're considering
+        candidate_features = [feature for feature in all_feature_names if feature not in selected_feature_names]
+        assert len(candidate_features) + len(selected_feature_names) == len(all_feature_names)
+        # Create a model for each
+        models = [model(**kwargs) for _i in range(len(candidate_features))]
+        # Trim the cross validation partitions to include only selected features
+        partitions_subfeatures = []
+        for ft in candidate_features:
+            partitions_subfeatures.append([extract_features_from_partition(part, selected_feature_names + [ft]) for part in partitions])
+        # Perform cross validation and evaluate them
+        results = pool.starmap(util.cross_validate, [(part, model) for part, model in zip(partitions_subfeatures, models)])
+        results_metrics = [sklearn.metrics.f1_score(*pair) for pair in results]
+        best_feature = candidate_features[np.argmax(results_metrics)]
+        logging.info("{}: adding feature {}".format(np.round(max(results_metrics), 4), best_feature))
+        selected_feature_names.append(best_feature)
+        selected_feature_scores.append(max(results_metrics))
+    pool.close()
+    pool.join()
+
+    return selected_feature_names, selected_feature_scores
+
+def run_forward_search(num_features=50, percentile=25):
+    """Execute script"""
+    data = util.impute_by_col(data_loader.load_all_data())
+    rates = data.pop('heart_disease_mortality')
+    rates_high_low = util.continuous_to_categorical(rates, 100 - percentile)
+    train_validation_partitions, test_set = util.split_train_valid_k_fold(data, rates_high_low)
+
+    features, scores = feature_forward_search(train_validation_partitions, num_features, LogisticRegression,
+        solver='liblinear', class_weight='balanced', C=1, penalty='l1', random_state=98572, max_iter=1000)
+    df = pd.DataFrame(scores, index=features, columns=['F1'])
+    df.to_csv(os.path.join(os.path.dirname(os.path.dirname(__file__)), "results/forward_search_{}_logreg.csv".format(num_features)))
+
+def run_backwards_search(percentile=25):
     """Execute script"""
     data = util.impute_by_col(data_loader.load_all_data())
     rates = data.pop('heart_disease_mortality')
@@ -99,4 +148,4 @@ def main(percentile=25):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    main()
+    run_forward_search()
