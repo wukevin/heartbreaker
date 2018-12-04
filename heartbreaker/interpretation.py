@@ -8,6 +8,7 @@ import logging
 import multiprocessing
 
 import numpy as np
+import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 import sklearn.metrics
@@ -58,7 +59,13 @@ def feature_backwards_search(x_train, y_train, x_test, y_test, fname, model, **k
     logging.info("Min and max scores after dropping features: {} {}".format(min(dropped_scores), max(dropped_scores)))
 
     if fname:
-        raise NotImplementedError()  # Supposed to write out the relative importance here
+        df = pd.DataFrame(
+            dropped_scores,
+            columns=['F1'],
+            index=x_train.columns,
+        )
+        df.at['full_baseline'] = baseline_score
+        df.to_csv(fname)
 
     # Drop column whose loss results in the largest improvement in performance
     if max(dropped_scores) > baseline_score:
@@ -79,8 +86,16 @@ def main(percentile=25):
 
     # Use the first split
     x_train, y_train, x_test, y_test = train_validation_partitions[0]
-    feature_backwards_search(x_train, y_train, x_test, y_test, "", LogisticRegression,
-        solver='liblinear', class_weight='balanced', C=1, penalty='l1', random_state=98572, max_iter=1000)
+
+    # Perform backwards set until we have a final set
+    x_train_old, x_test_old = None, None
+    i = 0
+    while x_train_old is not x_train:
+        x_train_old = x_train
+        x_test_old = x_test
+        x_train, x_test = feature_backwards_search(x_train, y_train, x_test, y_test, os.path.join(os.path.dirname(os.path.dirname(__file__)), "results/backward_searc_{}.csv".format(i)), LogisticRegression,
+            solver='liblinear', class_weight='balanced', C=1, penalty='l1', random_state=98572, max_iter=1000)
+        i += 1
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
