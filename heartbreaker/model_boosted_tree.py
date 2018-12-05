@@ -12,6 +12,7 @@ import xgboost
 
 import data_loader
 import util
+import plotting
 
 def xgb(x_train, y_train, x_test, y_test, depth=6, n_est=250):
     """
@@ -35,7 +36,7 @@ def xgb(x_train, y_train, x_test, y_test, depth=6, n_est=250):
     recall = sklearn.metrics.recall_score(y_test, y_pred)
     return accuracy, precision, recall, f1
 
-def main(percentile=25):
+def parameter_sweep(percentile=25):
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
     rates_high_low = util.continuous_to_categorical(rates, 100 - percentile)
@@ -65,6 +66,17 @@ def main(percentile=25):
             hyperparams=parameters[best_index],
         ))
 
+def feature_importance(percentile=25):
+    data = util.impute_by_col(data_loader.load_all_data(), np.mean)
+    rates = data.pop('heart_disease_mortality')
+    rates_high_low = util.continuous_to_categorical(rates, 100 - percentile)
+    
+    model = xgboost.XGBClassifier(max_depth=6, learning_rate=1e-2, n_estimators=250, random_state=8292)
+    model.fit(data, rates_high_low)
+
+    plotting.plot_shap_tree_summary(model, data, data, os.path.join(plotting.PLOTS_DIR, "xgboost_importance.png"))
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    main()
+    # parameter_sweep()
+    feature_importance()

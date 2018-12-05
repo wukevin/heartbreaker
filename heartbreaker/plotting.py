@@ -8,6 +8,8 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 plt.rcParams['figure.figsize'] = [8, 6]
 
+import shap
+
 import data_loader
 
 PLOTS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "plots")
@@ -51,6 +53,22 @@ def make_histograms():
     print(np.nanmin(data['VEG_FARMS12']))
     print(np.nanmedian(data['VEG_FARMS12']))
     print(np.nanmax(data['VEG_FARMS12']))
+
+def plot_shap_tree_summary(model, baseline_data, eval_data, output_fname):
+    """Create a shap summary plot"""
+    explainer = shap.TreeExplainer(model, baseline_data)
+    shap_values = explainer.shap_values(eval_data)
+    shap.summary_plot(
+        shap_values,
+        eval_data,
+        class_names=["Low risk", "High risk"],
+        show=False  # Allows for saving below
+    )
+    plt.savefig(
+        output_fname,
+        bbox_inches='tight',
+        dpi=PLOTS_DPI,
+    )
 
 if __name__ == "__main__":
     # make_histograms()
