@@ -91,7 +91,7 @@ def feature_forward_search(partitions, num_features, model, **kwargs):
     selected_feature_names = []
     selected_feature_scores = []
 
-    pool = multiprocessing.Pool(multiprocessing.cpu_count())
+    pool = multiprocessing.Pool(int(multiprocessing.cpu_count() / 2))
     while len(selected_feature_names) < min(num_features, len(all_feature_names)):
         # Define which features we're considering
         candidate_features = [feature for feature in all_feature_names if feature not in selected_feature_names]
@@ -121,6 +121,9 @@ def run_forward_search(num_features=50, percentile=25):
     rates_high_low = util.continuous_to_categorical(rates, 100 - percentile)
     train_validation_partitions, test_set = util.split_train_valid_k_fold(data, rates_high_low)
 
+    if num_features <= 0:
+        num_features = data.shape[1]  # Set the number of features to be *everything*
+        logging.info("Got a value <= 0 for num_features; evaluating all {} features".format(num_features))
     features, scores = feature_forward_search(train_validation_partitions, num_features, LogisticRegression,
         solver='liblinear', class_weight='balanced', C=1, penalty='l1', random_state=98572, max_iter=1000)
     df = pd.DataFrame(scores, index=features, columns=['F1'])
@@ -148,4 +151,7 @@ def run_backwards_search(percentile=25):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    run_forward_search()
+    if len(sys.argv) == 2:
+        run_forward_search(int(sys.argv[1]))
+    else:
+        run_forward_search()
