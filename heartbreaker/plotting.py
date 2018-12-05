@@ -24,7 +24,19 @@ def histogram(values, xlabel, title, fname, nbins=40):
 
     plt.savefig(fname, bbox_inches='tight', dpi=PLOTS_DPI)
 
-def main():
+def plot_forward_search(source=os.path.join(os.path.dirname(os.path.dirname(__file__)), "results/forward_search_191_logreg.csv"), plot_fname=os.path.join(PLOTS_DIR, "forward_search_plot.png")):
+    """Plots the results of forward search"""
+    results = pd.read_csv(source, index_col=0)
+    fig, ax = plt.subplots()
+
+    ax.scatter(range(len(results)), results, alpha=0.6, marker=".")
+    ax.set_ylabel("F1 score")
+    ax.set_xlabel("Num. features (n={})".format(len(results)))
+    ax.set_title("Forward feature search")
+    
+    plt.savefig(plot_fname, bbox_inches='tight', dpi=PLOTS_DPI)
+
+def make_histograms():
     """Generate the plots"""
     data = data_loader.load_all_data()
     
@@ -41,4 +53,5 @@ def main():
     print(np.nanmax(data['VEG_FARMS12']))
 
 if __name__ == "__main__":
-    main()
+    # make_histograms()
+    plot_forward_search()
