@@ -36,7 +36,8 @@ def xgb(x_train, y_train, x_test, y_test, depth=6, n_est=250):
     recall = sklearn.metrics.recall_score(y_test, y_pred)
     return accuracy, precision, recall, f1
 
-def parameter_sweep(percentile=25):
+def parameter_sweep(percentile=25, depth_candidates=[4, 6, 8], num_est_candidates=[150, 200, 250, 300, 350]):
+    """Sweet the hyperparameters and see what is the best combination"""
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
     rates_high_low = util.continuous_to_categorical(rates, 100 - percentile)
@@ -45,8 +46,6 @@ def parameter_sweep(percentile=25):
     # Evaluate k fold in parallel and tune hyperparameters
     parameters = []
     metrics = []
-    depth_candidates = [4, 6, 8]
-    num_est_candidates = [150, 200, 250, 300, 350]
     pool = multiprocessing.Pool(multiprocessing.cpu_count())
     for depth, num_estimators in itertools.product(depth_candidates, num_est_candidates):
         performance_metrics = pool.starmap(xgb, [part + (depth, num_estimators) for part in train_validation_partitions])
@@ -67,11 +66,12 @@ def parameter_sweep(percentile=25):
         ))
 
 def feature_importance(percentile=25):
+    """Evaluate feature importance by fitting a model to ALL the data"""
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
     rates_high_low = util.continuous_to_categorical(rates, 100 - percentile)
     
-    model = xgboost.XGBClassifier(max_depth=6, learning_rate=1e-2, n_estimators=250, random_state=8292)
+    model = xgboost.XGBClassifier(max_depth=6, learning_rate=1e-2, n_estimators=250, random_state=8292)  # 6 and 250 for depth and n_estimators were found via parameter sweep
     model.fit(data, rates_high_low)
 
     plotting.plot_shap_tree_summary(model, data, data, os.path.join(plotting.PLOTS_DIR, "shap_xgboost_importance.png"))
