@@ -12,6 +12,8 @@ import collections
 
 import pandas as pd
 
+import util
+
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 assert os.path.isdir(DATA_DIR), "Cannot find data directory: {}".format(DATA_DIR)
 
@@ -116,7 +118,7 @@ def load_usda_food_env_table(fname):
 
     return df
 
-def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR):
+def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR, trunc_extreme_vals=True):
     """
     Loads in all the data and joins them, returning a pandas dataframe where each row is a county
     and columns represent measurements of a certain feature.
@@ -134,6 +136,8 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
         # Update the heart disease dataframe with the result of the inner join
         heart_disease_df = pd.merge(heart_disease_df, df, 'inner', left_index=True, right_index=True)
 
+    if trunc_extreme_vals:
+        heart_disease_df = util.truncate_extreme_values(heart_disease_df)
     return heart_disease_df
 
 def main():
@@ -141,4 +145,5 @@ def main():
     print(load_all_data())
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     main()
