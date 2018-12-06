@@ -109,11 +109,16 @@ def truncate_extreme_values(df, max_iqr=3):
     For each column in the dataframe, find extreme values according IQR * median and truncate them.
     If max_iqr is set to 3, that means any value that is greater than median + 3 * IQR will be truncated
     and any value less than median - 3 * IQR will be truncated as well
+
+    Written to ignore nan values
     """
     for column in df:
-        col_median = np.median(df[column])
-        col_iqr = scipy.stats.iqr(df[column])
-        assert col_iqr > 0, "IQR must be positive but got {}".format(col_iqr)
+        col_median = np.nanmedian(df[column])
+        col_iqr = scipy.stats.iqr(df[column], nan_policy='omit')
+        assert col_iqr >= 0, "IQR must be nonnegative but got {} for column {}".format(col_iqr, column)
+        if col_iqr == 0:
+            logging.info("Skip extreme value truncation for column {}".format(column))
+            continue
         max_val = col_median + (max_iqr * col_iqr)
         min_val = col_median - (max_iqr * col_iqr)
         df.at[df[column] > max_val, column] = max_val  # Truncate upper end
