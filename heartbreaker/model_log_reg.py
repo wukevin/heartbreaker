@@ -73,15 +73,15 @@ def log_reg(x_train, y_train, x_test, y_test, c=0.1, ft_contrib_plot_fname=""):
     precision = sklearn.metrics.precision_score(y_test, y_pred)
     recall = sklearn.metrics.recall_score(y_test, y_pred)
 
-    fn_indices = [index for index in range(len(y_pred)) if y_test[index] and not y_pred[index]]
-    fn_feature_matrix = pd.DataFrame(
-        x_train_std[fn_indices,],
-        index=x_train.index[fn_indices],
+    pos_indices = [index for index in range(len(y_pred)) if y_pred[index]]
+    pos_feature_matrix = pd.DataFrame(
+        x_train_std[pos_indices,],
+        index=x_train.index[pos_indices],
         columns=x_train.columns,
     )
     weights_labeled = pd.Series(np.ndarray.flatten(model.coef_), index=x_train.columns)
     if ft_contrib_plot_fname:
-        plot_overall_feature_contributions(fn_feature_matrix, weights_labeled, ft_contrib_plot_fname)
+        plot_overall_feature_contributions(pos_feature_matrix, weights_labeled, ft_contrib_plot_fname)
 
     return accuracy, precision, recall, f1
 
@@ -115,7 +115,7 @@ def main(percentile=25):
         ))
     
     logging.info("Plotting feature importance for c=0.1")
-    list(itertools.starmap(log_reg, [part + (0.1, os.path.join(plotting.PLOTS_DIR, "logreg_kfold_fn_{}.png".format(i))) for i, part in enumerate(train_validation_partitions)]))
+    list(itertools.starmap(log_reg, [part + (0.1, os.path.join(plotting.PLOTS_DIR, "logreg_kfold_pos_{}.png".format(i))) for i, part in enumerate(train_validation_partitions)]))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
