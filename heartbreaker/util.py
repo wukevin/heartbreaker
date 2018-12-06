@@ -6,6 +6,7 @@ import logging
 
 import numpy as np
 import pandas as pd
+import scipy.stats
 
 from sklearn.preprocessing import StandardScaler
 
@@ -102,6 +103,22 @@ def split_train_valid_k_fold(full_x, full_y, k=10, testing_holdout=0.1, seed=754
     testing_pair = (full_x.iloc[testing_indices], full_y[testing_indices])
 
     return partitions, testing_pair
+
+def truncate_extreme_values(df, max_iqr=3):
+    """
+    For each column in the dataframe, find extreme values according IQR * median and truncate them.
+    If max_iqr is set to 3, that means any value that is greater than median + 3 * IQR will be truncated
+    and any value less than median - 3 * IQR will be truncated as well
+    """
+    for column in df:
+        col_median = np.median(df[column])
+        col_iqr = scipy.stats.iqr(df[column])
+        assert col_iqr > 0, "IQR must be positive but got {}".format(col_iqr)
+        max_val = col_median + (max_iqr * col_iqr)
+        min_val = col_median - (max_iqr * col_iqr)
+        df.at[df[column] > max_val, column] = max_val  # Truncate upper end
+        df.at[df[column] < min_val, column] = min_val  # Truncate lower end
+    return df
 
 def cross_validate(partitions, model):
     """
