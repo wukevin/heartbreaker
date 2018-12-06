@@ -19,6 +19,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 import data_loader
 import util
+import plotting
 
 # Used below links as guidance for how to do multiple metric evaluation + K-fold CV
 # https://scikit-learn.org/stable/modules/model_evaluation.html#multimetric-scoring
@@ -48,7 +49,8 @@ def classification(model, x_train, y_train, seed=seed, scale=False):
         pipeline = model
         
     kf = KFold(n_splits=10, random_state=seed)
-    cv_results = cross_validate(pipeline, x_train, y_train, cv=kf, scoring=scoring, return_train_score=False)
+    # This is a dictionary of outputs
+    cv_results = cross_validate(pipeline, x_train, y_train, cv=kf, scoring=scoring, return_train_score=False, return_estimator=True)
     
     accuracy = np.mean(cv_results['test_acc'])
     precision = np.mean(cv_results['test_prec'])
@@ -57,6 +59,8 @@ def classification(model, x_train, y_train, seed=seed, scale=False):
     
     logging.info(model.__class__.__name__)
     logging.info("Accuracy: %0.4f, Precision: %0.4f, Recall: %0.4f, F1: %0.4f" % (accuracy, precision, recall, f1))
+
+    return cv_results['estimator']
 
 def main():
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
@@ -78,8 +82,11 @@ def main():
     rf = RandomForestClassifier(n_estimators=100, min_samples_leaf=.01, bootstrap=True)
     models.append((rf, False))
     
+    trained_models = []
     for (model, scale) in models:
-        classification(model, x_train, y_train, seed, scale=scale)
+        trained_models.append(classification(model, x_train, y_train, seed, scale=scale))
+    
+    plotting.plot_shap_tree_summary(trained_models[-1][1], x_train, x_test)
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
