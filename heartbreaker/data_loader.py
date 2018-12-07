@@ -176,13 +176,21 @@ def load_usda_food_env_table(fname):
 
 def load_cms_table(fname=CMS_TABLE, desired_cols=['Average HCC Score', 'Standardized Risk-Adjusted Per Capita Costs']):
     """Load in the CMS table (from 2014)"""
-    raise NotImplementedError()  # Disable for now
     # Read in the table
     df = pd.read_csv(fname, engine='c', low_memory=False, na_values="*")
     # Drop state/country summary rows and rows with an unknown county
     df.drop(index=[i for i, row in df.iterrows() if row['County'] in ['UNKNOWN', 'STATE TOTAL', 'NATIONAL TOTAL']], inplace=True)
 
+    # Create our custom county identifiers
+    custom_indices = [homogenize_state_abbrev(state) + "|" + homogenize_county_name(county) for state, county in zip(df['State'], df['County'])]
+    assert len(set(custom_indices)) == len(custom_indices)
+
     df_subcols = df[desired_cols]
+    for colname in df_subcols.columns:  # Convert all to numeric
+        numeric_converted = np.array([float(val.strip("$").replace(",", "")) if isinstance(val, str) else float(val) for val in df[colname]])
+        df_subcols.loc[:, colname] = numeric_converted
+    df_subcols = df_subcols.astype(np.float64)
+    df_subcols.index = custom_indices
     return df_subcols
 
 def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC01_VC85', 'HC01_VC118']):
@@ -234,12 +242,15 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
     acs_table = load_acs_table()
     heart_disease_df = pd.merge(heart_disease_df, acs_table, 'inner', left_index=True, right_index=True)
 
+    cms_table = load_cms_table()
+    heart_disease_df = pd.merge(heart_disease_df, cms_table, 'inner', left_index=True, right_index=True)
+
     return heart_disease_df
 
 def main():
     """Mostly for on the fly testing"""
     print(load_all_data())
-    # print(load_acs_table(desired_cols=[]))
+    # print(load_cms_table())
 
 if __name__ == "__main__":
     main()
