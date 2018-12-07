@@ -6,6 +6,9 @@ import logging
 
 import numpy as np
 import pandas as pd
+import scipy.stats
+
+from sklearn.preprocessing import StandardScaler
 
 def impute_by_col(df, replace=np.nanmedian):
     """Impute nan values in each row using the given replacement"""
@@ -100,3 +103,47 @@ def split_train_valid_k_fold(full_x, full_y, k=10, testing_holdout=0.1, seed=754
     testing_pair = (full_x.iloc[testing_indices], full_y[testing_indices])
 
     return partitions, testing_pair
+
+def truncate_extreme_values(df, max_iqr=3):
+    """
+    For each column in the dataframe, find extreme values according IQR * median and truncate them.
+    If max_iqr is set to 3, that means any value that is greater than median + 3 * IQR will be truncated
+    and any value less than median - 3 * IQR will be truncated as well
+
+    Written to ignore nan values
+    """
+    for column in df:
+        col_median = np.nanmedian(df[column])
+        col_iqr = scipy.stats.iqr(df[column], nan_policy='omit')
+        assert col_iqr >= 0, "IQR must be nonnegative but got {} for column {}".format(col_iqr, column)
+        if col_iqr == 0:
+            logging.info("Skip extreme value truncation for column {}".format(column))
+            continue
+        max_val = col_median + (max_iqr * col_iqr)
+        min_val = col_median - (max_iqr * col_iqr)
+        df.at[df[column] > max_val, column] = max_val  # Truncate upper end
+        df.at[df[column] < min_val, column] = min_val  # Truncate lower end
+    return df
+
+def cross_validate(partitions, model):
+    """
+    Perform cross validation with the partitions and the model
+    Model should already be instantiated and have a fit and predict method.
+    Returns two vectors of labels: predictions, truths
+    These can easily be fed into sklearn's metrics calculators
+    """
+    truth_nested = []
+    preds_nested = []
+    for partition in partitions:
+        x_train, y_train, x_test, y_test = partition  # Unpack
+        sc = StandardScaler()
+        x_train_std = sc.fit_transform(x_train)
+        x_test_std = sc.transform(x_test)
+
+        model.fit(x_train_std, y_train)
+        preds = model.predict(x_test_std)
+        preds_nested.append(preds)
+        truth_nested.append(y_test)
+    truth_flat = list(itertools.chain.from_iterable(truth_nested))
+    preds_flat = list(itertools.chain.from_iterable(preds_nested))
+    return truth_flat, preds_flat

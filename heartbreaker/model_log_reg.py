@@ -19,6 +19,7 @@ import xgboost
 
 import data_loader
 import util
+import plotting
 
 plt.rcParams['figure.figsize'] = [18, 9]
 
@@ -54,9 +55,10 @@ def plot_overall_feature_contributions(df, weights, fname):
     plt.savefig(fname, bbox_inches='tight', dpi=600)
     # print(fname)
 
-def log_reg(x_train, y_train, x_test, y_test, c=1.0, fn_filename=""):
+def log_reg(x_train, y_train, x_test, y_test, c=0.1, ft_contrib_plot_fname=""):
     """
-    Train logistic regression with L1 regularization
+    Train logistic regression with L1 regularization. C value in function signature is optimal
+    value based on parameter sweep.
     """
     # Standardize
     sc = StandardScaler()
@@ -71,14 +73,15 @@ def log_reg(x_train, y_train, x_test, y_test, c=1.0, fn_filename=""):
     precision = sklearn.metrics.precision_score(y_test, y_pred)
     recall = sklearn.metrics.recall_score(y_test, y_pred)
 
-    fn_indices = [index for index in range(len(y_pred)) if y_test[index] and not y_pred[index]]
-    fn_feature_matrix = pd.DataFrame(
-        x_train_std[fn_indices,],
-        index=x_train.index[fn_indices],
+    pos_indices = [index for index in range(len(y_pred)) if y_pred[index]]
+    pos_feature_matrix = pd.DataFrame(
+        x_train_std[pos_indices,],
+        index=x_train.index[pos_indices],
         columns=x_train.columns,
     )
     weights_labeled = pd.Series(np.ndarray.flatten(model.coef_), index=x_train.columns)
-    plot_overall_feature_contributions(fn_feature_matrix, weights_labeled, fn_filename)
+    if ft_contrib_plot_fname:
+        plot_overall_feature_contributions(pos_feature_matrix, weights_labeled, ft_contrib_plot_fname)
 
     return accuracy, precision, recall, f1
 
@@ -91,13 +94,12 @@ def main(percentile=25):
     # Evaluate k fold in parallel and tune hyperparameters
     parameters = []
     metrics = []
-    reg_constant_candidates = [1]#[0.001, 0.01, 0.1, 1.0, 10.0, 100]
+    reg_constant_candidates = [0.01, 0.1, 1.0, 10.0, 100]
     pool = multiprocessing.Pool(multiprocessing.cpu_count())
     for reg_constant in reg_constant_candidates:
-        # performance_metrics = pool.starmap(log_reg, [part + (reg_constant, "/Users/kevin/Documents/Stanford/courses/cs229_heartbreaker/plots/logreg_kfold_{}.png".format(i)) for i, part in enumerate(train_validation_partitions)])
-        performance_metrics = itertools.starmap(log_reg, [part + (reg_constant, "/Users/kevin/Documents/Stanford/courses/cs229_heartbreaker/plots/logreg_kfold_fn_{}.png".format(i)) for i, part in enumerate(train_validation_partitions)])
+        performance_metrics = pool.starmap(log_reg, [part + (reg_constant, "") for i, part in enumerate(train_validation_partitions)])
         overall = np.vstack(performance_metrics)
-        logging.info("Average logreg metrics with c={}: {}".format(reg_constant, np.mean(overall, axis=0)))
+        logging.info("Average logreg metrics with c={}:\t{}".format(reg_constant, np.mean(overall, axis=0)))
         parameters.append((reg_constant))
         metrics.append(np.mean(overall, axis=0))
     pool.close()
@@ -111,6 +113,9 @@ def main(percentile=25):
             value=np.round(metrics[best_index, i], decimals=4),
             hyperparams=parameters[best_index],
         ))
+    
+    logging.info("Plotting feature importance for c=0.1")
+    list(itertools.starmap(log_reg, [part + (0.1, os.path.join(plotting.PLOTS_DIR, "logreg_kfold_pos_{}.png".format(i))) for i, part in enumerate(train_validation_partitions)]))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

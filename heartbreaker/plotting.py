@@ -8,6 +8,8 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 plt.rcParams['figure.figsize'] = [8, 6]
 
+import shap
+
 import data_loader
 
 PLOTS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "plots")
@@ -24,7 +26,19 @@ def histogram(values, xlabel, title, fname, nbins=40):
 
     plt.savefig(fname, bbox_inches='tight', dpi=PLOTS_DPI)
 
-def main():
+def plot_forward_search(source=os.path.join(os.path.dirname(os.path.dirname(__file__)), "results/forward_search_191_logreg.csv"), plot_fname=os.path.join(PLOTS_DIR, "forward_search_plot.png")):
+    """Plots the results of forward search"""
+    results = pd.read_csv(source, index_col=0)
+    fig, ax = plt.subplots()
+
+    ax.scatter(range(len(results)), results, alpha=0.6, marker=".")
+    ax.set_ylabel("F1 score")
+    ax.set_xlabel("Num. features (n={})".format(len(results)))
+    ax.set_title("Forward feature search")
+    
+    plt.savefig(plot_fname, bbox_inches='tight', dpi=PLOTS_DPI)
+
+def make_histograms():
     """Generate the plots"""
     data = data_loader.load_all_data()
     
@@ -40,5 +54,23 @@ def main():
     print(np.nanmedian(data['VEG_FARMS12']))
     print(np.nanmax(data['VEG_FARMS12']))
 
+def plot_shap_tree_summary(model, baseline_data, eval_data, output_fname=""):
+    """Create a shap summary plot"""
+    explainer = shap.TreeExplainer(model, baseline_data)
+    shap_values = explainer.shap_values(eval_data)
+    shap.summary_plot(
+        shap_values,
+        eval_data,
+        class_names=["Low risk", "High risk"],
+        show=False if output_fname else False  # Allows for saving below
+    )
+    if output_fname:
+        plt.savefig(
+            output_fname,
+            bbox_inches='tight',
+            dpi=PLOTS_DPI,
+        )
+
 if __name__ == "__main__":
-    main()
+    # make_histograms()
+    plot_forward_search()

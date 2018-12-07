@@ -13,6 +13,8 @@ import collections
 import numpy as np
 import pandas as pd
 
+import util
+
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
 assert os.path.isdir(DATA_DIR), "Cannot find data directory: {}".format(DATA_DIR)
 
@@ -225,7 +227,7 @@ def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC
     df_subcols.index = custom_county_labels
     return df_subcols
 
-def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR, engineered_features=True):
+def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR, trunc_extreme_vals=True, engineered_features=True):
     """
     Loads in all the data and joins them, returning a pandas dataframe where each row is a county
     and columns represent measurements of a certain feature. 
@@ -260,6 +262,8 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
         ))
         heart_disease_df['eng_healthcare_costs_income_normalized'] = income_normalized_hc_cost
 
+    if trunc_extreme_vals:
+        heart_disease_df = util.truncate_extreme_values(heart_disease_df)
     return heart_disease_df
 
 def main():
@@ -269,4 +273,5 @@ def main():
     # print(load_cms_table())
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     main()
