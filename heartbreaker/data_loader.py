@@ -210,7 +210,7 @@ def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC
         county = homogenize_county_name(county_raw)
         state = homogenize_state_abbrev(US_STATE_ABBREVIATIONS[state_raw.strip()])
         return state + "|" + county
-    logging.info("Reading in {}">format(fname))
+    logging.info("Reading in {}".format(fname))
     df = pd.read_csv(fname, na_values=['(X)', '-', '**'], low_memory=False, engine='c')
     # Drop columns corresponding to Washington DC
     df.drop(index=[i for i, row in df.iterrows() if 'District of Columbia' in row['GEO.display-label']], inplace=True)
@@ -253,12 +253,12 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
     if engineered_features:
         # Divide per capita cost with per capita income
         income_normalized_hc_cost = heart_disease_df['Standardized Risk-Adjusted Per Capita Costs'] / heart_disease_df['HC01_VC118']
-        logging.info("Adding income-normalized healthcare costs feature with min median max: {} {} {}".format(
-            np.min(income_normalized_hc_cost),
-            np.nanmedian(income_normalized_hc_cost),
-            np.max(income_normalized_hc_cost),
+        logging.info("Appending income-normalized healthcare costs feature with min median max: {} {} {}".format(
+            np.round(np.min(income_normalized_hc_cost), 4),
+            np.round(np.nanmedian(income_normalized_hc_cost), 4),
+            np.round(np.max(income_normalized_hc_cost), 4),
         ))
-        heart_disease_df['healthcare_costs_income_normalized'] = income_normalized_hc_cost
+        heart_disease_df['eng_healthcare_costs_income_normalized'] = income_normalized_hc_cost
 
     return heart_disease_df
 
