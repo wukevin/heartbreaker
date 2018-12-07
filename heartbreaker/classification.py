@@ -21,7 +21,6 @@ from sklearn.svm import SVC
 import data_loader
 import util
 import plotting
-import time
 
 # Used below links as guidance for how to do multiple metric evaluation + K-fold CV
 # https://scikit-learn.org/stable/modules/model_evaluation.html#multimetric-scoring
@@ -89,10 +88,7 @@ def main():
     
     trained_models = []
     for (model, scale) in models:
-        t0 = time.time()
         trained_models.append(classification(model, x_train, y_train, seed, scale=scale))
-        t1= time.time()
-        print(t1-t0)
     
     plotting.plot_shap_tree_summary(trained_models[-1][1], x_train, x_test)
 
