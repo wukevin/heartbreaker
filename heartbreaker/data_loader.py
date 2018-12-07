@@ -10,6 +10,7 @@ import logging
 import glob
 import collections
 
+import numpy as np
 import pandas as pd
 
 import util
@@ -21,6 +22,63 @@ HEART_DISEASE_FPATH = os.path.join(DATA_DIR, "CDC_heart_disease_mortality/Heart_
 assert os.path.isfile(HEART_DISEASE_FPATH)
 USDA_FOOD_ATLAS_DIR = os.path.join(DATA_DIR, "USDA_food_environment_atlas")
 assert os.path.isdir(USDA_FOOD_ATLAS_DIR)
+CMS_TABLE = os.path.join(DATA_DIR, "CMS_public_use_file/State_County_2014_Table.csv")
+assert os.path.isfile(CMS_TABLE)
+ACS_TABLE = os.path.join(DATA_DIR, "ACS/ACS_14_5YR_DP03_with_ann.csv")
+assert os.path.isfile(ACS_TABLE)
+
+US_STATE_ABBREVIATIONS = {
+    'Alabama': 'AL',
+    'Alaska': 'AK',
+    'Arizona': 'AZ',
+    'Arkansas': 'AR',
+    'California': 'CA',
+    'Colorado': 'CO',
+    'Connecticut': 'CT',
+    'Delaware': 'DE',
+    'Florida': 'FL',
+    'Georgia': 'GA',
+    'Hawaii': 'HI',
+    'Idaho': 'ID',
+    'Illinois': 'IL',
+    'Indiana': 'IN',
+    'Iowa': 'IA',
+    'Kansas': 'KS',
+    'Kentucky': 'KY',
+    'Louisiana': 'LA',
+    'Maine': 'ME',
+    'Maryland': 'MD',
+    'Massachusetts': 'MA',
+    'Michigan': 'MI',
+    'Minnesota': 'MN',
+    'Mississippi': 'MS',
+    'Missouri': 'MO',
+    'Montana': 'MT',
+    'Nebraska': 'NE',
+    'Nevada': 'NV',
+    'New Hampshire': 'NH',
+    'New Jersey': 'NJ',
+    'New Mexico': 'NM',
+    'New York': 'NY',
+    'North Carolina': 'NC',
+    'North Dakota': 'ND',
+    'Ohio': 'OH',
+    'Oklahoma': 'OK',
+    'Oregon': 'OR',
+    'Pennsylvania': 'PA',
+    'Rhode Island': 'RI',
+    'South Carolina': 'SC',
+    'South Dakota': 'SD',
+    'Tennessee': 'TN',
+    'Texas': 'TX',
+    'Utah': 'UT',
+    'Vermont': 'VT',
+    'Virginia': 'VA',
+    'Washington': 'WA',
+    'West Virginia': 'WV',
+    'Wisconsin': 'WI',
+    'Wyoming': 'WY',
+}
 
 def determine_most_prevalent(x):
     """Given an iterable, find the most common element"""
@@ -49,6 +107,7 @@ def load_heart_disease_table(fname=HEART_DISEASE_FPATH):
     - Marked as "Insufficient Data"
     - Not of the most common type of measurement
     """
+    logging.info("Reading in {}".format(fname))
     # Read in the csv file into a data frame
     df = pd.read_csv(fname, engine='c', low_memory=False)
     # Remove data that is broken down by gender or by race.
@@ -89,6 +148,7 @@ def load_usda_food_env_table(fname):
     """
     if os.path.basename(fname).startswith("supplemental"):
         raise NotImplementedError("Cannot read supplemental tables")
+    logging.info("Reading in {}".format(fname))
     df = pd.read_csv(fname, engine='c', low_memory=False)
 
     # Reindex according to our unified county naming scheme
@@ -118,23 +178,89 @@ def load_usda_food_env_table(fname):
 
     return df
 
-def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR, trunc_extreme_vals=True):
+def load_cms_table(fname=CMS_TABLE, desired_cols=['Average HCC Score', 'Standardized Risk-Adjusted Per Capita Costs']):
+    """Load in the CMS table (from 2014)"""
+    # Read in the table
+    logging.info("Reading in {}".format(fname))
+    df = pd.read_csv(fname, engine='c', low_memory=False, na_values="*")
+    # Drop state/country summary rows and rows with an unknown county
+    df.drop(index=[i for i, row in df.iterrows() if row['County'] in ['UNKNOWN', 'STATE TOTAL', 'NATIONAL TOTAL']], inplace=True)
+
+    # Create our custom county identifiers
+    custom_indices = [homogenize_state_abbrev(state) + "|" + homogenize_county_name(county) for state, county in zip(df['State'], df['County'])]
+    assert len(set(custom_indices)) == len(custom_indices)
+
+    df_subcols = df[desired_cols]
+    for colname in df_subcols.columns:  # Convert all to numeric
+        numeric_converted = np.array([float(val.strip("$").replace(",", "")) if isinstance(val, str) else float(val) for val in df[colname]])
+        df_subcols.loc[:, colname] = numeric_converted
+    df_subcols = df_subcols.astype(np.float64)
+    df_subcols.index = custom_indices
+    return df_subcols
+
+def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC01_VC118']):
+    """
+    Load in the American Community Survey data (from 2014)
+    HC03_VC131 = percent with health insurance coverage (in civilian non-institutionalized population)
+    HC01_VC86 = Mean household income
+    HC01_VC85 = Median household income
+    HC01_VC118 = Per capita income
+
+    If desired_cols is an empty list, then we return the full data frame without subsetting columns
+    """
+    def _create_county_identifier(county_state_name):
+        """Helper function to reformat this table's county, state strings into our desired county state identifier strings"""
+        county_raw, state_raw = county_state_name.split(',')
+        county = homogenize_county_name(county_raw)
+        state = homogenize_state_abbrev(US_STATE_ABBREVIATIONS[state_raw.strip()])
+        return state + "|" + county
+    logging.info("Reading in {}".format(fname))
+    df = pd.read_csv(fname, na_values=['(X)', '-', '**'], low_memory=False, engine='c')
+    # Drop columns corresponding to Washington DC
+    df.drop(index=[i for i, row in df.iterrows() if 'District of Columbia' in row['GEO.display-label']], inplace=True)
+    # Subset to only columns we care about
+    if not desired_cols:
+        desired_cols = [col for col in df.columns if not col.startswith("GEO")]
+    df_subcols = df[desired_cols].astype(np.float64)
+    custom_county_labels = [_create_county_identifier(s) for s in df['GEO.display-label']]
+    assert len(set(custom_county_labels)) == len(custom_county_labels)  # Make sure no duplicates
+    df_subcols.index = custom_county_labels
+    return df_subcols
+
+def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR, trunc_extreme_vals=True, engineered_features=True):
     """
     Loads in all the data and joins them, returning a pandas dataframe where each row is a county
-    and columns represent measurements of a certain feature.
+    and columns represent measurements of a certain feature. 
+
+    Also does some minor feature engineering if engineered_features is set to True
     """
     # Everything is inner joined starting from here
-    logging.info("Reading in {}".format(heart_disease_fname))
     heart_disease_df = load_heart_disease_table(heart_disease_fname)
 
     # Read in the food env data and perform inner joins on our unified county identifier
     for match in glob.glob(os.path.join(usda_food_env_folder, "*.csv")):  # Query for all the csv files
         if os.path.basename(match).startswith("supplemental") or os.path.basename(match) == "variable_list.csv":
             continue  # Skip certain files
-        logging.info("Reading in {}".format(match))
         df = load_usda_food_env_table(match)
         # Update the heart disease dataframe with the result of the inner join
         heart_disease_df = pd.merge(heart_disease_df, df, 'inner', left_index=True, right_index=True)
+    
+    acs_table = load_acs_table()
+    heart_disease_df = pd.merge(heart_disease_df, acs_table, 'inner', left_index=True, right_index=True)
+
+    cms_table = load_cms_table()
+    heart_disease_df = pd.merge(heart_disease_df, cms_table, 'inner', left_index=True, right_index=True)
+
+    # Feature engineering
+    if engineered_features:
+        # Divide per capita cost with per capita income
+        income_normalized_hc_cost = heart_disease_df['Standardized Risk-Adjusted Per Capita Costs'] / heart_disease_df['HC01_VC118']
+        logging.info("Appending income-normalized healthcare costs feature with min median max: {} {} {}".format(
+            np.round(np.min(income_normalized_hc_cost), 4),
+            np.round(np.nanmedian(income_normalized_hc_cost), 4),
+            np.round(np.max(income_normalized_hc_cost), 4),
+        ))
+        heart_disease_df['eng_healthcare_costs_income_normalized'] = income_normalized_hc_cost
 
     if trunc_extreme_vals:
         heart_disease_df = util.truncate_extreme_values(heart_disease_df)
@@ -142,7 +268,9 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
 
 def main():
     """Mostly for on the fly testing"""
+    logging.basicConfig(level=logging.INFO)
     print(load_all_data())
+    # print(load_cms_table())
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
