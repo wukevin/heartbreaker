@@ -208,7 +208,9 @@ def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC
     if not desired_cols:
         desired_cols = [col for col in df.columns if not col.startswith("GEO")]
     df_subcols = df[desired_cols].astype(np.float64)
-    df_subcols.index = [_create_county_identifier(s) for s in df['GEO.display-label']]
+    custom_county_labels = [_create_county_identifier(s) for s in df['GEO.display-label']]
+    assert len(set(custom_county_labels)) == len(custom_county_labels)  # Make sure no duplicates
+    df_subcols.index = custom_county_labels
     return df_subcols
 
 def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR):
@@ -228,13 +230,16 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
         df = load_usda_food_env_table(match)
         # Update the heart disease dataframe with the result of the inner join
         heart_disease_df = pd.merge(heart_disease_df, df, 'inner', left_index=True, right_index=True)
+    
+    acs_table = load_acs_table()
+    heart_disease_df = pd.merge(heart_disease_df, acs_table, 'inner', left_index=True, right_index=True)
 
     return heart_disease_df
 
 def main():
     """Mostly for on the fly testing"""
-    # print(load_all_data())
-    print(load_acs_table(desired_cols=[]))
+    print(load_all_data())
+    # print(load_acs_table(desired_cols=[]))
 
 if __name__ == "__main__":
     main()
