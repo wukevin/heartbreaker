@@ -105,6 +105,7 @@ def load_heart_disease_table(fname=HEART_DISEASE_FPATH):
     - Marked as "Insufficient Data"
     - Not of the most common type of measurement
     """
+    logging.info("Reading in {}".format(fname))
     # Read in the csv file into a data frame
     df = pd.read_csv(fname, engine='c', low_memory=False)
     # Remove data that is broken down by gender or by race.
@@ -145,6 +146,7 @@ def load_usda_food_env_table(fname):
     """
     if os.path.basename(fname).startswith("supplemental"):
         raise NotImplementedError("Cannot read supplemental tables")
+    logging.info("Reading in {}".format(fname))
     df = pd.read_csv(fname, engine='c', low_memory=False)
 
     # Reindex according to our unified county naming scheme
@@ -231,14 +233,12 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
     Also does some minor feature engineering if engineered_features is set to True
     """
     # Everything is inner joined starting from here
-    logging.info("Reading in {}".format(heart_disease_fname))
     heart_disease_df = load_heart_disease_table(heart_disease_fname)
 
     # Read in the food env data and perform inner joins on our unified county identifier
     for match in glob.glob(os.path.join(usda_food_env_folder, "*.csv")):  # Query for all the csv files
         if os.path.basename(match).startswith("supplemental") or os.path.basename(match) == "variable_list.csv":
             continue  # Skip certain files
-        logging.info("Reading in {}".format(match))
         df = load_usda_food_env_table(match)
         # Update the heart disease dataframe with the result of the inner join
         heart_disease_df = pd.merge(heart_disease_df, df, 'inner', left_index=True, right_index=True)
