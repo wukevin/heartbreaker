@@ -174,13 +174,26 @@ def load_usda_food_env_table(fname):
 
     return df
 
+def load_cms_table(fname=CMS_TABLE, desired_cols=['Average HCC Score', 'Standardized Risk-Adjusted Per Capita Costs']):
+    """Load in the CMS table (from 2014)"""
+    raise NotImplementedError()  # Disable for now
+    # Read in the table
+    df = pd.read_csv(fname, engine='c', low_memory=False, na_values="*")
+    # Drop state/country summary rows and rows with an unknown county
+    df.drop(index=[i for i, row in df.iterrows() if row['County'] in ['UNKNOWN', 'STATE TOTAL', 'NATIONAL TOTAL']], inplace=True)
+
+    df_subcols = df[desired_cols]
+    return df_subcols
+
 def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC01_VC85', 'HC01_VC118']):
     """
-    Load in the American Community Survey data
+    Load in the American Community Survey data (from 2014)
     HC03_VC131 = percent with health insurance coverage (in civilian non-institutionalized population)
     HC01_VC86 = Mean household income
     HC01_VC85 = Median household income
     HC01_VC118 = Per capita income
+
+    If desired_cols is an empty list, then we return the full data frame without subsetting columns
     """
     def _create_county_identifier(county_state_name):
         """Helper function to reformat this table's county, state strings into our desired county state identifier strings"""
@@ -188,10 +201,12 @@ def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC
         county = homogenize_county_name(county_raw)
         state = homogenize_state_abbrev(US_STATE_ABBREVIATIONS[state_raw.strip()])
         return state + "|" + county
-    df = pd.read_csv(fname, na_values='(X)', low_memory=False, engine='c')
+    df = pd.read_csv(fname, na_values=['(X)', '-', '**'], low_memory=False, engine='c')
     # Drop columns corresponding to Washington DC
     df.drop(index=[i for i, row in df.iterrows() if 'District of Columbia' in row['GEO.display-label']], inplace=True)
     # Subset to only columns we care about
+    if not desired_cols:
+        desired_cols = [col for col in df.columns if not col.startswith("GEO")]
     df_subcols = df[desired_cols].astype(np.float64)
     df_subcols.index = [_create_county_identifier(s) for s in df['GEO.display-label']]
     return df_subcols
@@ -219,7 +234,7 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
 def main():
     """Mostly for on the fly testing"""
     # print(load_all_data())
-    print(load_acs_table())
+    print(load_acs_table(desired_cols=[]))
 
 if __name__ == "__main__":
     main()
