@@ -177,6 +177,7 @@ def load_usda_food_env_table(fname):
 def load_cms_table(fname=CMS_TABLE, desired_cols=['Average HCC Score', 'Standardized Risk-Adjusted Per Capita Costs']):
     """Load in the CMS table (from 2014)"""
     # Read in the table
+    logging.info("Reading in {}".format(fname))
     df = pd.read_csv(fname, engine='c', low_memory=False, na_values="*")
     # Drop state/country summary rows and rows with an unknown county
     df.drop(index=[i for i, row in df.iterrows() if row['County'] in ['UNKNOWN', 'STATE TOTAL', 'NATIONAL TOTAL']], inplace=True)
@@ -193,7 +194,7 @@ def load_cms_table(fname=CMS_TABLE, desired_cols=['Average HCC Score', 'Standard
     df_subcols.index = custom_indices
     return df_subcols
 
-def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC01_VC85', 'HC01_VC118']):
+def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC01_VC118']):
     """
     Load in the American Community Survey data (from 2014)
     HC03_VC131 = percent with health insurance coverage (in civilian non-institutionalized population)
@@ -209,6 +210,7 @@ def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC
         county = homogenize_county_name(county_raw)
         state = homogenize_state_abbrev(US_STATE_ABBREVIATIONS[state_raw.strip()])
         return state + "|" + county
+    logging.info("Reading in {}">format(fname))
     df = pd.read_csv(fname, na_values=['(X)', '-', '**'], low_memory=False, engine='c')
     # Drop columns corresponding to Washington DC
     df.drop(index=[i for i, row in df.iterrows() if 'District of Columbia' in row['GEO.display-label']], inplace=True)
@@ -221,10 +223,12 @@ def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC
     df_subcols.index = custom_county_labels
     return df_subcols
 
-def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR):
+def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR, engineered_features=True):
     """
     Loads in all the data and joins them, returning a pandas dataframe where each row is a county
-    and columns represent measurements of a certain feature.
+    and columns represent measurements of a certain feature. 
+
+    Also does some minor feature engineering if engineered_features is set to True
     """
     # Everything is inner joined starting from here
     logging.info("Reading in {}".format(heart_disease_fname))
@@ -245,10 +249,22 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
     cms_table = load_cms_table()
     heart_disease_df = pd.merge(heart_disease_df, cms_table, 'inner', left_index=True, right_index=True)
 
+    # Feature engineering
+    if engineered_features:
+        # Divide per capita cost with per capita income
+        income_normalized_hc_cost = heart_disease_df['Standardized Risk-Adjusted Per Capita Costs'] / heart_disease_df['HC01_VC118']
+        logging.info("Adding income-normalized healthcare costs feature with min median max: {} {} {}".format(
+            np.min(income_normalized_hc_cost),
+            np.nanmedian(income_normalized_hc_cost),
+            np.max(income_normalized_hc_cost),
+        ))
+        heart_disease_df['healthcare_costs_income_normalized'] = income_normalized_hc_cost
+
     return heart_disease_df
 
 def main():
     """Mostly for on the fly testing"""
+    logging.basicConfig(level=logging.INFO)
     print(load_all_data())
     # print(load_cms_table())
 
