@@ -27,7 +27,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.model_selection import cross_validate, train_test_split, KFold
 from sklearn.feature_selection import SelectFromModel
 from sklearn.pipeline import Pipeline
-from sklearn.svm import LinearSVC
+from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 
 seed = 754927
@@ -39,7 +39,7 @@ def get_gscv(model, grid_params, scale=False, verbose=10):
         scaling_step = ('transformer', StandardScaler())
         pipeline_steps.append(scaling_step)
     
-    feature_selection_step = ('feature_selection', SelectFromModel(LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear', random_state=98572)))
+    feature_selection_step = ('feature_selection', SelectFromModel(LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear', random_state=seed)))
     pipeline_steps.append(feature_selection_step)
     
     estimation_step = ('estimator', model)
@@ -65,7 +65,7 @@ def main():
 
     models = []
     
-    dt = DecisionTreeClassifier()
+    dt = DecisionTreeClassifier(random_state=seed)
     
     dt_params = {
         "criterion": ["gini", "entropy"],
@@ -76,7 +76,7 @@ def main():
     
     models.append((dt, dt_params, False))
     
-    rf = RandomForestClassifier(n_estimators=100, min_samples_leaf=.01, bootstrap=True)
+    rf = RandomForestClassifier(n_estimators=100, min_samples_leaf=.01, bootstrap=True, random_state=seed)
     
     rf_params = {
         "n_estimators": [10, 100, 1000],
@@ -87,6 +87,27 @@ def main():
     }
     
     models.append((rf, rf_params, False))
+    
+    svc_rbf = SVC(kernel='rbf', random_state=seed)
+    svc_linear = SVC(kernel='linear', random_state=seed)
+    svc_sigmoid = SVC(kernel='sigmoid', random_state=seed)
+    
+    svc_params = {
+        "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000]
+    }
+    
+    models.append((svc_rbf, svc_params, True))
+    models.append((svc_linear, svc_params, True))
+    models.append((svc_sigmoid, svc_params, True))
+    
+    lr = LogisticRegression(random_state=seed, max_iter=1000)
+    
+    lr_params = {
+        "penalty": ["l1", "l2"],
+        "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000]
+    }
+    
+    models.append((lr, lr_params, True))
     
     for (model, params, scale) in models:        
         grid_params = adjust_params(params)
