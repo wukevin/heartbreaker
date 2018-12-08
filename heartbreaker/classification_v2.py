@@ -120,8 +120,6 @@ def main():
         logging.info(cv.best_score_)
         logging.info("Best Parameters")
         logging.info(cv.best_params_)
-        logging.info("Performance on Test Set")
-        logging.info(cv.score(x_test, y_test))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
