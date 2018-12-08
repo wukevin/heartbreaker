@@ -114,8 +114,8 @@ def main(percentile=25):
             hyperparams=parameters[best_index],
         ))
     
-    logging.info("Plotting feature importance for c=0.1")
-    list(itertools.starmap(log_reg, [part + (0.1, os.path.join(plotting.PLOTS_DIR, "logreg_kfold_pos_{}.png".format(i))) for i, part in enumerate(train_validation_partitions)]))
+    logging.info("Plotting feature importance for c=1.0")
+    list(itertools.starmap(log_reg, [part + (1.0, os.path.join(plotting.PLOTS_DIR, "logreg_kfold_pos_{}.png".format(i))) for i, part in enumerate(train_validation_partitions)]))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

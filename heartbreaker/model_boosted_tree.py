@@ -14,7 +14,7 @@ import data_loader
 import util
 import plotting
 
-def xgb(x_train, y_train, x_test, y_test, depth=6, n_est=200):
+def xgb(x_train, y_train, x_test, y_test, depth=6, n_est=250):
     """
     Train a boosted tree and return performance on testing data
 
@@ -71,7 +71,7 @@ def feature_importance(percentile=25):
     rates = data.pop('heart_disease_mortality')
     rates_high_low = util.continuous_to_categorical(rates, 100 - percentile)
     
-    model = xgboost.XGBClassifier(max_depth=6, learning_rate=1e-2, n_estimators=200, random_state=8292)  # 6 and 200 for depth and n_estimators were found via parameter sweep
+    model = xgboost.XGBClassifier(max_depth=6, learning_rate=1e-2, n_estimators=250, random_state=8292)  # 6 and 250 for depth and n_estimators were found via parameter sweep
     model.fit(data, rates_high_low)
 
     plotting.plot_shap_tree_summary(model, data, data, os.path.join(plotting.PLOTS_DIR, "shap_xgboost_importance.png"))

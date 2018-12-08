@@ -26,7 +26,7 @@ def histogram(values, xlabel, title, fname, nbins=40):
 
     plt.savefig(fname, bbox_inches='tight', dpi=PLOTS_DPI)
 
-def plot_forward_search(source=os.path.join(os.path.dirname(os.path.dirname(__file__)), "results/forward_search_191_logreg.csv"), plot_fname=os.path.join(PLOTS_DIR, "forward_search_plot.png")):
+def plot_forward_search(source=os.path.join(os.path.dirname(os.path.dirname(__file__)), "results/forward_search_197_logreg.csv"), plot_fname=os.path.join(PLOTS_DIR, "forward_search_plot.png")):
     """Plots the results of forward search"""
     results = pd.read_csv(source, index_col=0)
     fig, ax = plt.subplots()
