@@ -16,6 +16,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
 
 import data_loader
 import util
@@ -81,6 +82,9 @@ def main():
     
     rf = RandomForestClassifier(n_estimators=100, min_samples_leaf=.01, bootstrap=True)
     models.append((rf, False))
+    
+    svc = SVC(kernel='linear')
+    models.append((svc, True))
     
     trained_models = []
     for (model, scale) in models:
