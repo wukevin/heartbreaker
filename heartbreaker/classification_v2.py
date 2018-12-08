@@ -100,7 +100,7 @@ def main():
     models.append((svc_linear, svc_params, True))
     models.append((svc_sigmoid, svc_params, True))
     
-    lr = LogisticRegression(random_state=seed, max_iter=1000)
+    lr = LogisticRegression(random_state=seed, max_iter=1000, solver='liblinear')
     
     lr_params = {
         "penalty": ["l1", "l2"],
