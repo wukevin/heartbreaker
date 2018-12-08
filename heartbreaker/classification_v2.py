@@ -39,7 +39,7 @@ def get_gscv(model, grid_params, scale=False, verbose=10):
         scaling_step = ('transformer', StandardScaler())
         pipeline_steps.append(scaling_step)
     
-    feature_selection_step = ('feature_selection', SelectFromModel(LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear')))
+    feature_selection_step = ('feature_selection', SelectFromModel(LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear', random_state=98572)))
     pipeline_steps.append(feature_selection_step)
     
     estimation_step = ('estimator', model)
@@ -75,6 +75,18 @@ def main():
     }
     
     models.append((dt, dt_params, False))
+    
+    rf = RandomForestClassifier(n_estimators=100, min_samples_leaf=.01, bootstrap=True)
+    
+    rf_params = {
+        "n_estimators": [10, 100, 1000],
+        "criterion": ["gini", "entropy"],
+        "max_depth": [None, 25, 50, 100],
+        "min_samples_leaf": [0.001, 0.01, 0.1],
+        "max_features": ["sqrt", "log2", None]
+    }
+    
+    models.append((rf, rf_params, False))
     
     for (model, params, scale) in models:        
         grid_params = adjust_params(params)
