@@ -47,7 +47,7 @@ def get_gscv(model, grid_params, scale=False, verbose=10):
     
     pipeline = Pipeline(pipeline_steps)
     
-    cv = GridSearchCV(pipeline, grid_params, scoring=['f1', 'accuracy', 'precision', 'recall'], cv=10, verbose=verbose, refit='f1',  n_jobs=4)
+    cv = GridSearchCV(pipeline, grid_params, scoring=['f1', 'accuracy', 'precision', 'recall'], cv=10, verbose=verbose, refit='f1',  n_jobs=multiprocessing.cpu_count())
     
     return cv
 
