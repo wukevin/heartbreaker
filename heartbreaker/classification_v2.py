@@ -32,7 +32,7 @@ from sklearn.model_selection import GridSearchCV
 
 seed = 754927
 
-def get_gscv(model, grid_params, scale=False, verbose=10):
+def get_gscv(model, grid_params, scale=False, verbose=0):
     pipeline_steps = []
 
     if (scale):
