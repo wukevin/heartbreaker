@@ -32,7 +32,7 @@ from sklearn.model_selection import GridSearchCV
 
 seed = 754927
 
-def get_gscv(model, grid_params, scale=False, verbose=10):
+def get_gscv(model, grid_params, scale=False, verbose=0):
     pipeline_steps = []
 
     if (scale):
@@ -69,9 +69,9 @@ def main():
     
     dt_params = {
         "criterion": ["gini", "entropy"],
-        "max_depth": [None, 25, 50, 100],
-        "min_samples_leaf": [0.001, 0.01, 0.1],
-        "max_features": ["sqrt", "log2", None]
+        #"max_depth": [None, 25, 50, 100],
+        #"min_samples_leaf": [0.001, 0.01, 0.1],
+        #"max_features": ["sqrt", "log2", None]
     }
     
     models.append((dt, dt_params, False))
@@ -80,10 +80,10 @@ def main():
     
     rf_params = {
         "n_estimators": [10, 100, 1000],
-        "criterion": ["gini", "entropy"],
-        "max_depth": [None, 25, 50, 100],
-        "min_samples_leaf": [0.001, 0.01, 0.1],
-        "max_features": ["sqrt", "log2", None]
+        #"criterion": ["gini", "entropy"],
+        #"max_depth": [None, 25, 50, 100],
+        #"min_samples_leaf": [0.001, 0.01, 0.1],
+        #"max_features": ["sqrt", "log2", None]
     }
     
     models.append((rf, rf_params, False))
@@ -93,18 +93,18 @@ def main():
     svc_sigmoid = SVC(kernel='sigmoid', random_state=seed)
     
     svc_params = {
-        "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000]
+        "C": [0.001, 0.01] #0.1, 1, 10, 100, 1000]
     }
     
     models.append((svc_rbf, svc_params, True))
     models.append((svc_linear, svc_params, True))
     models.append((svc_sigmoid, svc_params, True))
     
-    lr = LogisticRegression(random_state=seed, max_iter=1000)
+    lr = LogisticRegression(random_state=seed, max_iter=1000, solver='liblinear')
     
     lr_params = {
         "penalty": ["l1", "l2"],
-        "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000]
+        #"C": [0.001, 0.01, 0.1, 1, 10, 100, 1000]
     }
     
     models.append((lr, lr_params, True))
