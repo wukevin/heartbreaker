@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import sklearn
 from sklearn.model_selection import train_test_split, cross_validate, KFold
+from sklearn.utils import class_weight
 
 import xgboost
 
@@ -75,8 +76,12 @@ def parameter_sweep_pipeline(percentile=25, depth_candidates=[4, 6, 8], num_est_
     y = rates_discrete
     x_train, x_test, y_train, y_test = train_test_split(x, rates_discrete, test_size=0.10, random_state=seed)
 
+    weights = class_weight.compute_class_weight('balanced', [0, 1], y_train)
+    weight_ratio = weights[1] / weights[0]
+    logging.info("XGBoost weight ratio: {}".format(np.round(weight_ratio, 4)))
+
     models = []
-    boosted_tree = xgboost.XGBClassifier(learning_rate=1e-2, random_state=8292)
+    boosted_tree = xgboost.XGBClassifier(learning_rate=1e-2, scale_pos_weight=weight_ratio, random_state=8292)
     boosted_tree_params = {
         "max_depth": depth_candidates,
         "n_estimators": num_est_candidates,
