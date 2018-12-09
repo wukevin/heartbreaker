@@ -39,7 +39,7 @@ def get_gscv(model, grid_params, scale=False, verbose=0):
         scaling_step = ('transformer', StandardScaler())
         pipeline_steps.append(scaling_step)
     
-    feature_selection_step = ('feature_selection', SelectFromModel(LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear', random_state=seed)))
+    feature_selection_step = ('feature_selection', SelectFromModel(LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear', random_state=seed, class_weight='balanced')))
     pipeline_steps.append(feature_selection_step)
     
     estimation_step = ('estimator', model)
@@ -65,7 +65,7 @@ def main():
 
     models = []
     
-    dt = DecisionTreeClassifier(random_state=seed)
+    dt = DecisionTreeClassifier(random_state=seed, class_weight='balanced')
     
     dt_params = {
         "criterion": ["gini", "entropy"],
@@ -76,7 +76,7 @@ def main():
     
     models.append((dt, dt_params, False))
     
-    rf = RandomForestClassifier(n_estimators=100, min_samples_leaf=.01, bootstrap=True, random_state=seed)
+    rf = RandomForestClassifier(n_estimators=100, min_samples_leaf=.01, bootstrap=True, random_state=seed, class_weight='balanced')
     
     rf_params = {
         "n_estimators": [10, 100, 1000],
@@ -88,9 +88,9 @@ def main():
     
     models.append((rf, rf_params, False))
     
-    svc_rbf = SVC(kernel='rbf', random_state=seed)
-    svc_linear = SVC(kernel='linear', random_state=seed)
-    svc_sigmoid = SVC(kernel='sigmoid', random_state=seed)
+    svc_rbf = SVC(kernel='rbf', random_state=seed, class_weight='balanced')
+    svc_linear = SVC(kernel='linear', random_state=seed, class_weight='balanced')
+    svc_sigmoid = SVC(kernel='sigmoid', random_state=seed, class_weight='balanced')
     
     svc_params = {
         "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000]
@@ -100,7 +100,7 @@ def main():
     models.append((svc_linear, svc_params, True))
     models.append((svc_sigmoid, svc_params, True))
     
-    lr = LogisticRegression(random_state=seed, max_iter=1000, solver='liblinear')
+    lr = LogisticRegression(random_state=seed, max_iter=1000, solver='liblinear', class_weight='balanced')
     
     lr_params = {
         "penalty": ["l1", "l2"],
