@@ -89,7 +89,7 @@ def parameter_sweep_pipeline(percentile=25, depth_candidates=[4, 6, 8], num_est_
     }
     models.append((boosted_tree, boosted_tree_params))
 
-    for (model, params, scale) in models:
+    for (model, params) in models:
         grid_params = adjust_params(params)
         cv = get_gscv(model, grid_params, scale=False, preselect_features=False)
         cv.fit(x_train, y_train)
