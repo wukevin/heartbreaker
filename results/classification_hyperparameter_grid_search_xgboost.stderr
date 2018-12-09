@@ -1,0 +1,37 @@
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/CDC_heart_disease_mortality/Heart_Disease_Mortality_Data_Among_US_Adults_35_plus_by_State_Territory_and_County.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/USDA_food_environment_atlas/access.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/USDA_food_environment_atlas/assistance.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/USDA_food_environment_atlas/health.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/USDA_food_environment_atlas/insecurity.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/USDA_food_environment_atlas/local.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/USDA_food_environment_atlas/prices_taxes.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/USDA_food_environment_atlas/restaurants.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/USDA_food_environment_atlas/socioeconomic.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/USDA_food_environment_atlas/stores.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/ACS/ACS_14_5YR_DP03_with_ann.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker/data/CMS_public_use_file/State_County_2014_Table.csv
+/cluster/u/wukevin/conda/envs/heartbreaker/lib/python3.6/site-packages/pandas/core/indexing.py:543: SettingWithCopyWarning:
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  self.obj[item] = s
+INFO:root:Appending income-normalized healthcare costs feature with min median max: 0.1337 0.4194 1.5735
+INFO:root:Skip extreme value truncation for column SNAP_REPORTSIMPLE09
+INFO:root:Skip extreme value truncation for column FDPIR12
+INFO:root:Skip extreme value truncation for column PCH_SLHOUSE_07_12
+INFO:root:Skip extreme value truncation for column GHVEG_SQFT07
+INFO:root:Skip extreme value truncation for column GHVEG_SQFTPTH07
+INFO:root:Skip extreme value truncation for column FARM_TO_SCHOOL09
+INFO:root:Skip extreme value truncation for column PERPOV10
+INFO:root:Skip extreme value truncation for column PERCHLDPOV10
+INFO:root:Skip extreme value truncation for column POPLOSS10
+INFO:root:Skip extreme value truncation for column PCH_SUPERC_09_14
+INFO:root:75 percentile correspond to a value of 409.8
+INFO:root:Categorized 750 of 2997 values as high
+INFO:root:XGBoost weight ratio: 2.9956
+INFO:root:XGBClassifier
+INFO:root:Best F1 Score
+INFO:root:0.7072497510486214
+INFO:root:Best Parameters
+INFO:root:{'estimator__max_depth': 6, 'estimator__n_estimators': 350}

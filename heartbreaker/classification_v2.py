@@ -32,15 +32,16 @@ from sklearn.model_selection import GridSearchCV
 
 seed = 754927
 
-def get_gscv(model, grid_params, scale=False, verbose=0):
+def get_gscv(model, grid_params, scale=False, preselect_features=True, verbose=0):
     pipeline_steps = []
 
     if (scale):
         scaling_step = ('transformer', StandardScaler())
         pipeline_steps.append(scaling_step)
     
-    feature_selection_step = ('feature_selection', SelectFromModel(LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear', random_state=seed, class_weight='balanced')))
-    pipeline_steps.append(feature_selection_step)
+    if preselect_features:
+        feature_selection_step = ('feature_selection', SelectFromModel(LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear', random_state=seed, class_weight='balanced')))
+        pipeline_steps.append(feature_selection_step)
     
     estimation_step = ('estimator', model)
     pipeline_steps.append(estimation_step)
