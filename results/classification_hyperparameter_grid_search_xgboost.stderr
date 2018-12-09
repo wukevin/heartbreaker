@@ -32,6 +32,6 @@ INFO:root:Categorized 750 of 2997 values as high
 INFO:root:XGBoost weight ratio: 2.9956
 INFO:root:XGBClassifier
 INFO:root:Best F1 Score
-INFO:root:0.7072497510486214
+INFO:root:0.7137301982155457
 INFO:root:Best Parameters
-INFO:root:{'estimator__max_depth': 6, 'estimator__n_estimators': 350}
+INFO:root:{'estimator__max_depth': 8, 'estimator__n_estimators': 350, 'estimator__reg_alpha': 1}
