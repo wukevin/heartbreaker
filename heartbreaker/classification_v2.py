@@ -36,10 +36,12 @@ def get_gscv(model, grid_params, scale=False, preselect_features=False, verbose=
     pipeline_steps = []
 
     if (scale):
+        logging.info("{} grid search with feature scaling")
         scaling_step = ('transformer', StandardScaler())
         pipeline_steps.append(scaling_step)
     
     if preselect_features:
+        logging.info("{} grid search with feature pre-selection")
         feature_selection_step = ('feature_selection', SelectFromModel(LogisticRegression(penalty='l1', max_iter=1000, solver='liblinear', random_state=seed, class_weight='balanced')))
         pipeline_steps.append(feature_selection_step)
     
