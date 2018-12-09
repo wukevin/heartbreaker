@@ -7,12 +7,14 @@ import logging
 import numpy as np
 import pandas as pd
 import sklearn
+from sklearn.model_selection import train_test_split, cross_validate, KFold
 
 import xgboost
 
 import data_loader
 import util
 import plotting
+from classification_v2 import get_gscv, adjust_params
 
 def xgb(x_train, y_train, x_test, y_test, depth=6, n_est=250):
     """
@@ -25,7 +27,7 @@ def xgb(x_train, y_train, x_test, y_test, depth=6, n_est=250):
     n_est = 100
     """
     # Learning rate is default 0.1
-    model = xgboost.XGBClassifier(max_depth=depth, learning_rate=1e-2, n_estimators=n_est, random_state=8292)
+    model = xgboost.XGBClassifier(max_depth=depth, learning_rate=1e-2, n_estimators=n_est, random_state=8292, class_weights='balanced')
     logging.debug("Training XGBoost classifier with parameters depth={} n_estimators={}".format(depth, n_est))
     model.fit(x_train, y_train)
     # print(model)
@@ -65,6 +67,33 @@ def parameter_sweep(percentile=25, depth_candidates=[4, 6, 8], num_est_candidate
             hyperparams=parameters[best_index],
         ))
 
+def parameter_sweep_pipeline(percentile=25, depth_candidates=[4, 6, 8], num_est_candidates=[150, 200, 250, 300, 350], seed=8558):
+    data = util.impute_by_col(data_loader.load_all_data(), np.mean)
+    rates = data.pop('heart_disease_mortality')
+    rates_discrete = util.continuous_to_categorical(rates, percentile_cutoff=75)
+    x = data
+    y = rates_discrete
+    x_train, x_test, y_train, y_test = train_test_split(x, rates_discrete, test_size=0.10, random_state=seed)
+
+    models = []
+    boosted_tree = xgboost.XGBClassifier(learning_rate=1e-2, random_state=8292)
+    boosted_tree_params = {
+        "max_depth": depth_candidates,
+        "n_estimators": num_est_candidates,
+    }
+    models.append((boosted_tree, boosted_tree_params, False))
+
+    for (model, params, scale) in models:
+        grid_params = adjust_params(params)
+        cv = get_gscv(model, grid_params, scale=scale)
+        cv.fit(x_train, y_train)
+
+        logging.info(model.__class__.__name__)
+        logging.info("Best F1 Score")
+        logging.info(cv.best_score_)
+        logging.info("Best Parameters")
+        logging.info(cv.best_params_)
+
 def feature_importance(percentile=25):
     """Evaluate feature importance by fitting a model to ALL the data"""
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
@@ -79,4 +108,5 @@ def feature_importance(percentile=25):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     # parameter_sweep()
-    feature_importance()
+    # feature_importance()
+    parameter_sweep_pipeline()
