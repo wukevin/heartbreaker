@@ -116,8 +116,8 @@ def train_nn(net, x_train, y_train, x_test, y_test, f_beta=None, weight_ratio=2,
      ))
     return best, recall_values[best_iteration], precision_values[best_iteration],fscore_values[best_iteration], recall_values, precision_values, fscore_values
 
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+def gridsearch():
+    """Best parameters seem to be 250 25 0.001"""
     if torch.cuda.is_available():
         torch.cuda.set_device(2)
         torch.set_default_tensor_type(torch.cuda.FloatTensor)
@@ -157,3 +157,7 @@ if __name__ == "__main__":
             weight_ratio=1,
             lr=lr,
         )
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    gridsearch()
