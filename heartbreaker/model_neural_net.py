@@ -37,7 +37,7 @@ class NaiveNet(torch.nn.Dropout):
 
 def eval_net_on_test_data(nn, test_data, test_target):
     net_out_test = nn(test_data)
-    preds = np.array(net_out_test.data.max(1)[1])
+    preds = np.array(net_out_test.data.cpu().max(1)[1])
     preds = np.array(np.round(preds, decimals=0), dtype=int)  # Ensure we are dealing with integer data
     both_pos = np.intersect1d(np.where(test_target), np.where(preds))
     total_positive = np.sum(preds)
