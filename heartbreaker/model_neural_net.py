@@ -84,7 +84,7 @@ def train_nn(net, x_train, y_train, x_test, y_test, f_beta=None, weight_ratio=2,
         loss = criterion(net_out, target)
         loss.backward()
         optimizer.step()
-        if (i + 1) % 25 == 0:  # Record incrementally
+        if (i + 1) % 1000 == 0:  # Record incrementally
             recall, precision, fpr, tp, fp, fn = eval_net_on_test_data(net, test_data, test_target)
             tp_values[i] = tp
             fp_values[i] = fp
@@ -92,8 +92,9 @@ def train_nn(net, x_train, y_train, x_test, y_test, f_beta=None, weight_ratio=2,
             recall_values[i] = recall
             precision_values[i] = precision
             fdr_values[i] = fpr
-            fscore_values[i] = util.f_beta_score(tp, fp, fn, beta=f_beta if f_beta is not None else 1.25)
+            fscore_values[i] = util.f_beta_score(tp, fp, fn, beta=f_beta if f_beta is not None else 1)
             model_history[i] = copy.deepcopy(net)
+            logging.info("Training iteration {} - {}".format(i + 1, np.round(fscore_values[i], 6)))
 
     # Select and return the best model
     best_iteration = None
@@ -101,15 +102,15 @@ def train_nn(net, x_train, y_train, x_test, y_test, f_beta=None, weight_ratio=2,
     best_iteration = iterations[-1]
     if f_beta is not None:
         f_scores = [fscore_values[i] for i in iterations]
-        print("Best F-{} score: {}".format(f_beta, max(f_scores)))
+        logging.info("Best F-{} score: {}".format(f_beta, max(f_scores)))
         best_iteration = iterations[np.argmax(f_scores)]
     
     best = model_history[best_iteration]
-    print("Returning model at iteration {} with test set precision|recall|FDR: {}|{}|{}".format(
+    logging.info("Returning model at iteration {} with test set precision|recall|Fscore: {}|{}|{}".format(
         best_iteration,
         np.round(precision_values[best_iteration], 4),
         np.round(recall_values[best_iteration], 4),
-        np.round(fdr_values[best_iteration], 4),
+        np.round(fscore_values[best_iteration], 4),
      ))
     return best, recall_values[best_iteration], precision_values[best_iteration],fscore_values[best_iteration], recall_values, precision_values, fscore_values
 
