@@ -158,7 +158,7 @@ def train_nn_simple(net, x_train, y_train, x_test, y_test, weight_ratio=2, weigh
     return preds
 
 def gridsearch():
-    """Best parameters seem to be 250 25 0.001"""
+    """Best parameters seem to be 150 100 0.0001"""
     if torch.cuda.is_available():
         torch.cuda.set_device(2)
         torch.set_default_tensor_type(torch.cuda.FloatTensor)
@@ -216,6 +216,48 @@ def gridsearch():
     best_index = np.argmax(f1_scores)
     logging.info("Best model params: {}".format(param_combos[best_index]))
 
+def eval_params_on_train(**kwargs):
+    if torch.cuda.is_available():
+        torch.cuda.set_device(2)
+        torch.set_default_tensor_type(torch.cuda.FloatTensor)
+        logging.info(torch.cuda.get_device_name(torch.cuda.current_device()))
+        logging.info(torch.cuda.device_count())
+    else:
+        torch.set_default_tensor_type(torch.FloatTensor)
+        logging.info("CPU")
+    
+    data = util.impute_by_col(data_loader.load_all_data(), np.mean)
+    x = data
+    rates = data.pop('heart_disease_mortality')
+    y = util.continuous_to_categorical(rates, percentile_cutoff=75)
+    
+    partitions, holdout = util.split_train_valid_k_fold(x, y)
+
+    all_truths = []
+    all_preds = []
+    for part in partitions:
+        x_train, y_train, x_test, y_test = part
+        sc = StandardScaler()
+        # Fit the scaler to the training data and transform
+        x_train_std = sc.fit_transform(x_train)
+        # Apply the scaler to the test data
+        x_test_std = sc.transform(x_test)
+        preds = train_nn_simple(
+            NaiveNet(x_train.shape[1], **kwargs),
+            x_train_std, y_train.astype(int), x_test_std, y_test.astype(int),
+            weight_ratio=1,
+            lr=lr,
+        )
+        all_truths.extend(y_test)
+        all_preds.extend(preds)
+
+    logging.info("Accuracy: {}".format(accuracy_score(all_truths, all_preds)))
+    logging.info("Precision: {}".format(precision_score(all_truths, all_preds)))
+    logging.info("Recall: {}".format(recall_score(all_truths, all_preds)))
+    logging.info("F1 score: {}".format(f1_score(all_truths, all_preds)))
+
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    gridsearch()
+    # gridsearch()
+    eval_params_on_train
