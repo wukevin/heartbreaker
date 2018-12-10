@@ -15,6 +15,8 @@ import torch
 import data_loader
 import util
 
+seed = 754927
+
 class NaiveNet(torch.nn.Dropout):
     """Neural net"""
     def __init__(self, num_features, num_classes=2, first_layer=150, second_layer=25, activation='selu', dropout=0.1):
@@ -256,8 +258,42 @@ def eval_params_on_train(first_layer=150, second_layer=100, lr=1e-4):
     logging.info("Recall: {}".format(recall_score(all_truths, all_preds)))
     logging.info("F1 score: {}".format(f1_score(all_truths, all_preds)))
 
+def eval_params_on_test(first_layer=150, second_layer=100, lr=1e-4):
+    if torch.cuda.is_available():
+        torch.cuda.set_device(2)
+        torch.set_default_tensor_type(torch.cuda.FloatTensor)
+        logging.info(torch.cuda.get_device_name(torch.cuda.current_device()))
+        logging.info(torch.cuda.device_count())
+    else:
+        torch.set_default_tensor_type(torch.FloatTensor)
+        logging.info("CPU")
+    
+    data = util.impute_by_col(data_loader.load_all_data(), np.mean)
+    x = data
+    rates = data.pop('heart_disease_mortality')
+    y = util.continuous_to_categorical(rates, percentile_cutoff=75)
+    
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.10, random_state=seed)
+
+    sc = StandardScaler()
+    # Fit the scaler to the training data and transform
+    x_train_std = sc.fit_transform(x_train)
+    # Apply the scaler to the test data
+    x_test_std = sc.transform(x_test)
+    preds = train_nn_simple(
+        NaiveNet(x_train.shape[1], first_layer=first_layer, second_layer=second_layer),
+        x_train_std, y_train.astype(int), x_test_std, y_test.astype(int),
+        weight_ratio=1,
+        lr=lr,
+    )
+
+    logging.info("Test Accuracy: {}".format(accuracy_score(y_test, preds)))
+    logging.info("Test Precision: {}".format(precision_score(y_test, preds)))
+    logging.info("Test Recall: {}".format(recall_score(y_test, preds)))
+    logging.info("Test F1 score: {}".format(f1_score(y_test, preds)))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     # gridsearch()
-    eval_params_on_train()
+    # eval_params_on_train()
+    eval_params_on_test()
