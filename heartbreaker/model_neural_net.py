@@ -115,6 +115,15 @@ def train_nn(net, x_train, y_train, x_test, y_test, f_beta=None, weight_ratio=2,
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
+    if torch.cuda.is_available():
+        torch.cuda.set_device(2)
+        torch.set_default_tensor_type(torch.cuda.FloatTensor)
+        logging.info(torch.cuda.get_device_name(torch.cuda.current_device()))
+        logging.info(torch.cuda.device_count())
+    else:
+        torch.set_default_tensor_type(torch.FloatTensor)
+        logging.info("CPU")
+    
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     x = data
     rates = data.pop('heart_disease_mortality')
