@@ -117,5 +117,5 @@ def feature_importance(percentile=25):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     # parameter_sweep()
-    feature_importance()
-    # parameter_sweep_pipeline()
+    # feature_importance()
+    parameter_sweep_pipeline()
