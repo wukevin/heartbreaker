@@ -107,6 +107,7 @@ def parameter_sweep_pipeline(percentile=25, depth_candidates=[3, 4, 6, 8], num_e
         logging.info(cv.best_params_)
 
 def eval_on_test_set(booster='gbtree', lr=0.1, max_depth=6, min_child_weight=1, n_estimators=150, reg_alpha=10):
+    """The params in the above are from expanded grid search"""
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
     rates_discrete = util.continuous_to_categorical(rates, percentile_cutoff=75)
@@ -138,6 +139,44 @@ def eval_on_test_set(booster='gbtree', lr=0.1, max_depth=6, min_child_weight=1, 
     logging.info("Test Recall: {}".format(recall_score(y_test, preds)))
     logging.info("Test F1 score: {}".format(f1_score(y_test, preds)))
 
+def eval_on_train_set(booster='gbtree', lr=0.1, max_depth=6, min_child_weight=1, n_estimators=150, reg_alpha=10):
+    """The params in the above are from expanded grid search"""
+    data = util.impute_by_col(data_loader.load_all_data(), np.mean)
+    rates = data.pop('heart_disease_mortality')
+    rates_discrete = util.continuous_to_categorical(rates, percentile_cutoff=75)
+    x = data
+    y = rates_discrete
+    partitions, holdout = util.split_train_valid_k_fold(x, y)
+
+    all_truths = []
+    all_preds = []
+    for part in partitions:
+        x_train, y_train, x_test, y_test = part
+        weights = class_weight.compute_class_weight('balanced', [0, 1], y_train)
+        weight_ratio = weights[1] / weights[0]
+        logging.info("XGBoost weight ratio: {}".format(np.round(weight_ratio, 4)))
+
+        model = xgboost.XGBClassifier(
+            booster=booster,
+            lr=lr,
+            max_depth=max_depth,
+            min_child_weight=min_child_weight,
+            n_estimators=n_estimators,
+            reg_alpha=reg_alpha,
+            scale_pos_weight=weight_ratio,
+            random_state=8292,
+            reg_lambda=0,
+        )
+        model.fit(x_train, y_train)
+        preds = model.predict(x_test)
+        all_truths.extend(y_test)
+        all_preds.extend(preds)
+    
+    logging.info("Train Accuracy: {}".format(accuracy_score(all_truths, all_preds)))
+    logging.info("Train Precision: {}".format(precision_score(all_truths, all_preds)))
+    logging.info("Train Recall: {}".format(recall_score(all_truths, all_preds)))
+    logging.info("Train F1 score: {}".format(f1_score(all_truths, all_preds)))
+
 def feature_importance(percentile=25):
     """Evaluate feature importance by fitting a model to ALL the data"""
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
@@ -154,4 +193,5 @@ if __name__ == "__main__":
     # parameter_sweep()
     # feature_importance()
     # parameter_sweep_pipeline()
+    eval_on_train_set()
     eval_on_test_set()
