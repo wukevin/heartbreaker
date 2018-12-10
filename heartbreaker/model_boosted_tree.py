@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import sklearn
 from sklearn.model_selection import train_test_split, cross_validate, KFold
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.utils import class_weight
 
 import xgboost
@@ -16,6 +17,8 @@ import data_loader
 import util
 import plotting
 from classification_v2 import get_gscv, adjust_params
+
+seed = 754927
 
 def xgb(x_train, y_train, x_test, y_test, depth=8, n_est=350):
     """
@@ -103,6 +106,38 @@ def parameter_sweep_pipeline(percentile=25, depth_candidates=[3, 4, 6, 8], num_e
         logging.info("Best Parameters")
         logging.info(cv.best_params_)
 
+def eval_on_test_set(booster='gbtree', lr=0.1, max_depth=6, min_child_weight=1, n_estimators=150, reg_alpha=10):
+    data = util.impute_by_col(data_loader.load_all_data(), np.mean)
+    rates = data.pop('heart_disease_mortality')
+    rates_discrete = util.continuous_to_categorical(rates, percentile_cutoff=75)
+    x = data
+    y = rates_discrete
+    x_train, x_test, y_train, y_test = train_test_split(x, rates_discrete, test_size=0.10, random_state=seed)
+
+    weights = class_weight.compute_class_weight('balanced', [0, 1], y_train)
+    weight_ratio = weights[1] / weights[0]
+    logging.info("XGBoost weight ratio: {}".format(np.round(weight_ratio, 4)))
+
+    model = xgboost.XGBClassifier(
+        booster=booster,
+        lr=lr,
+        max_depth=max_depth,
+        min_child_weight=min_child_weight,
+        n_estimators=n_estimators,
+        reg_alpha=reg_alpha,
+        scale_pos_weight=weight_ratio,
+        random_state=8292,
+        reg_lambda=0,
+    )
+
+    model.fit(x_train, y_train)
+    preds = model.predict(x_test)
+    
+    logging.info("Test Accuracy: {}".format(accuracy_score(y_test, preds)))
+    logging.info("Test Precision: {}".format(precision_score(y_test, preds)))
+    logging.info("Test Recall: {}".format(recall_score(y_test, preds)))
+    logging.info("Test F1 score: {}".format(f1_score(y_test, preds)))
+
 def feature_importance(percentile=25):
     """Evaluate feature importance by fitting a model to ALL the data"""
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
@@ -118,4 +153,5 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     # parameter_sweep()
     # feature_importance()
-    parameter_sweep_pipeline()
+    # parameter_sweep_pipeline()
+    eval_on_test_set()
