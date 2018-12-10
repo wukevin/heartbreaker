@@ -147,3 +147,13 @@ def cross_validate(partitions, model):
     truth_flat = list(itertools.chain.from_iterable(truth_nested))
     preds_flat = list(itertools.chain.from_iterable(preds_nested))
     return truth_flat, preds_flat
+
+def f_beta_score(tp, fp, fn, beta=2):
+    """
+    All input values should be counts
+    The fbeta score measures effectiveness of retrieval WRT a user who attaches BETA times as much importance
+    to recall as precision
+    https://en.wikipedia.org/wiki/F1_score
+    """
+    bs = beta * beta
+    return ((1 + bs) * tp) / ((1 + bs) * tp + bs * fn + fp)
