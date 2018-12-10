@@ -2,6 +2,7 @@ import os
 import sys
 import copy
 import logging
+import itertools
 import collections
 
 import numpy as np
@@ -46,7 +47,7 @@ def eval_net_on_test_data(nn, test_data, test_target):
     fpr = (total_positive - len(both_pos)) / len(np.where(test_target.cpu().numpy() == 0)[0])  # false positives / total negatives
     return recall, precision, fpr, len(both_pos), (total_positive - len(both_pos)), sum(test_target.cpu().numpy()) - len(both_pos)
     
-def train_nn(net, x_train, y_train, x_test, y_test, f_beta=None, weight_ratio=2, weight_decay=0, num_iter=5000, lr=1e-4, seed=6321):
+def train_nn(net, x_train, y_train, x_test, y_test, f_beta=None, weight_ratio=2, weight_decay=0, num_iter=10000, lr=1e-3, seed=6321):
     """
     Trains the neural network, returning the best model based on test dataset performance
     if f_beta is not None, take the model with the highest f-score
@@ -139,20 +140,15 @@ if __name__ == "__main__":
     # Apply the scaler to the test data
     x_test_std = sc.transform(x_test)
     
-    # Picking a model via fscore
-    trained_nn, best_recall, best_prec, best_fscore, recall_history, precision_history, fscore_history = train_nn(
-        NaiveNet(x_train.shape[1]),
-        x_train_std, y_train.astype(int), x_test_std, y_test.astype(int),
-        weight_ratio=1,
-    )
-    # # Take the last model
-    # trained_nn, best_recall, best_prec, best_fscore, recall_history, precision_history, fscore_history = train_nn(
-    #     NaiveNet(x_train.shape[1]),
-    #     x_train_std, y_train, x_test_std, y_test,
-    #     weight_ratio=2,
-    # )
-    # trained_nn, best_recall, best_prec, best_fscore, recall_history, precision_history, fscore_history = train_nn(
-    #     NaiveNet(x_train.shape[1]),
-    #     x_train_std, y_train, x_test_std, y_test,
-    #     weight_ratio=3,
-    # )
+    # Gridsearch for hyperparameters
+    first_layer_sizes = [100, 150, 200, 250]
+    second_layer_sizes = [25, 50, 75, 100]
+    learning_rates = [1e-4, 1e-3, 1e-2]
+
+    for first_layer_size, second_layer_size, lr in itertools.product(first_layer_sizes, second_layer_sizes, learning_rates):
+        trained_nn, best_recall, best_prec, best_fscore, recall_history, precision_history, fscore_history = train_nn(
+            NaiveNet(x_train.shape[1], first_layer=first_layer_size, second_layer=second_layer_size),
+            x_train_std, y_train.astype(int), x_test_std, y_test.astype(int),
+            weight_ratio=1,
+            lr=lr,
+        )
