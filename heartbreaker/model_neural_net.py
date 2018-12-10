@@ -52,7 +52,8 @@ def train_nn(net, x_train, y_train, x_test, y_test, f_beta=None, weight_ratio=2,
     if f_beta is not None, take the model with the highest f-score
     returns dictionaries of precision/recall on test set throughout training iterations
     """
-    # torch.cuda.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
     np.random.seed(seed)
     
     # Calculate balanced class weights (originally used [1, 250])
