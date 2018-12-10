@@ -1,0 +1,611 @@
+INFO:root:TITAN X (Pascal)
+INFO:root:3
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/CDC_heart_disease_mortality/Heart_Disease_Mortality_Data_Among_US_Adults_35_plus_by_State_Territory_and_County.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/access.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/assistance.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/health.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/insecurity.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/local.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/prices_taxes.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/restaurants.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/socioeconomic.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/stores.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/ACS/ACS_14_5YR_DP03_with_ann.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/CMS_public_use_file/State_County_2014_Table.csv
+/cluster/u/wukevin/conda/envs/heartbreaker/lib/python3.6/site-packages/pandas/core/indexing.py:543: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  self.obj[item] = s
+INFO:root:Appending income-normalized healthcare costs feature with min median max: 0.1337 0.4194 1.5735
+INFO:root:Skip extreme value truncation for column SNAP simplified reporting, 2009*
+INFO:root:Skip extreme value truncation for column FDPIR Sites, 2012
+INFO:root:Skip extreme value truncation for column Small slaughterhouse facilities (% change), 2007 - 12
+INFO:root:Skip extreme value truncation for column Greenhouse veg and fresh herb sq feet, 2007
+INFO:root:Skip extreme value truncation for column Greenhouse veg and fresh herb sq feet/1,000 pop, 2007
+INFO:root:Skip extreme value truncation for column Farm to school program, 2009
+INFO:root:Skip extreme value truncation for column Persistent-poverty counties, 2010
+INFO:root:Skip extreme value truncation for column Persistent-child-poverty counties, 2010
+INFO:root:Skip extreme value truncation for column Population-loss counties, 2010
+INFO:root:Skip extreme value truncation for column Supercenters & club stores (% change), 2009-14
+INFO:root:75 percentile correspond to a value of 409.8
+INFO:root:Categorized 750 of 2997 values as high
+INFO:root:Evaluating params: 100 25 0.0001
+heartbreaker/model_neural_net.py:37: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Training iteration 1000 - 0.644231
+INFO:root:Training iteration 2000 - 0.659794
+INFO:root:Training iteration 3000 - 0.677596
+INFO:root:Training iteration 4000 - 0.633333
+INFO:root:Training iteration 5000 - 0.640449
+INFO:root:Training iteration 6000 - 0.674419
+INFO:root:Training iteration 7000 - 0.635294
+INFO:root:Training iteration 8000 - 0.627907
+INFO:root:Training iteration 9000 - 0.627907
+INFO:root:Training iteration 10000 - 0.631579
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.551|0.7397|0.6316
+INFO:root:Evaluating params: 100 25 0.001
+INFO:root:Training iteration 1000 - 0.659091
+INFO:root:Training iteration 2000 - 0.65896
+INFO:root:Training iteration 3000 - 0.635294
+INFO:root:Training iteration 4000 - 0.639053
+INFO:root:Training iteration 5000 - 0.642857
+INFO:root:Training iteration 6000 - 0.634731
+INFO:root:Training iteration 7000 - 0.634731
+INFO:root:Training iteration 8000 - 0.642857
+INFO:root:Training iteration 9000 - 0.642857
+INFO:root:Training iteration 10000 - 0.642857
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5684|0.7397|0.6429
+INFO:root:Evaluating params: 100 25 0.01
+INFO:root:Training iteration 1000 - 0.655738
+INFO:root:Training iteration 2000 - 0.666667
+INFO:root:Training iteration 3000 - 0.658824
+INFO:root:Training iteration 4000 - 0.654971
+INFO:root:Training iteration 5000 - 0.662791
+INFO:root:Training iteration 6000 - 0.662791
+INFO:root:Training iteration 7000 - 0.662791
+INFO:root:Training iteration 8000 - 0.654971
+INFO:root:Training iteration 9000 - 0.654971
+INFO:root:Training iteration 10000 - 0.678363
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5918|0.7945|0.6784
+INFO:root:Evaluating params: 100 50 0.0001
+INFO:root:Training iteration 1000 - 0.637255
+INFO:root:Training iteration 2000 - 0.648936
+INFO:root:Training iteration 3000 - 0.666667
+INFO:root:Training iteration 4000 - 0.644444
+INFO:root:Training iteration 5000 - 0.644444
+INFO:root:Training iteration 6000 - 0.640449
+INFO:root:Training iteration 7000 - 0.64
+INFO:root:Training iteration 8000 - 0.632184
+INFO:root:Training iteration 9000 - 0.635838
+INFO:root:Training iteration 10000 - 0.622754
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5532|0.7123|0.6228
+INFO:root:Evaluating params: 100 50 0.001
+INFO:root:Training iteration 1000 - 0.651429
+INFO:root:Training iteration 2000 - 0.635294
+INFO:root:Training iteration 3000 - 0.650888
+INFO:root:Training iteration 4000 - 0.638554
+INFO:root:Training iteration 5000 - 0.646707
+INFO:root:Training iteration 6000 - 0.646707
+INFO:root:Training iteration 7000 - 0.646707
+INFO:root:Training iteration 8000 - 0.634731
+INFO:root:Training iteration 9000 - 0.634731
+INFO:root:Training iteration 10000 - 0.634731
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5638|0.726|0.6347
+INFO:root:Evaluating params: 100 50 0.01
+INFO:root:Training iteration 1000 - 0.662921
+INFO:root:Training iteration 2000 - 0.655172
+INFO:root:Training iteration 3000 - 0.655172
+INFO:root:Training iteration 4000 - 0.655172
+INFO:root:Training iteration 5000 - 0.655172
+INFO:root:Training iteration 6000 - 0.651429
+INFO:root:Training iteration 7000 - 0.651429
+INFO:root:Training iteration 8000 - 0.651429
+INFO:root:Training iteration 9000 - 0.651429
+INFO:root:Training iteration 10000 - 0.651429
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5588|0.7808|0.6514
+INFO:root:Evaluating params: 100 75 0.0001
+INFO:root:Training iteration 1000 - 0.643216
+INFO:root:Training iteration 2000 - 0.663043
+INFO:root:Training iteration 3000 - 0.65896
+INFO:root:Training iteration 4000 - 0.658824
+INFO:root:Training iteration 5000 - 0.678571
+INFO:root:Training iteration 6000 - 0.670659
+INFO:root:Training iteration 7000 - 0.674699
+INFO:root:Training iteration 8000 - 0.666667
+INFO:root:Training iteration 9000 - 0.666667
+INFO:root:Training iteration 10000 - 0.658683
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5851|0.7534|0.6587
+INFO:root:Evaluating params: 100 75 0.001
+INFO:root:Training iteration 1000 - 0.674286
+INFO:root:Training iteration 2000 - 0.697143
+INFO:root:Training iteration 3000 - 0.693642
+INFO:root:Training iteration 4000 - 0.693642
+INFO:root:Training iteration 5000 - 0.693642
+INFO:root:Training iteration 6000 - 0.693642
+INFO:root:Training iteration 7000 - 0.693642
+INFO:root:Training iteration 8000 - 0.693642
+INFO:root:Training iteration 9000 - 0.693642
+INFO:root:Training iteration 10000 - 0.705882
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6186|0.8219|0.7059
+INFO:root:Evaluating params: 100 75 0.01
+INFO:root:Training iteration 1000 - 0.681818
+INFO:root:Training iteration 2000 - 0.681818
+INFO:root:Training iteration 3000 - 0.681818
+INFO:root:Training iteration 4000 - 0.685714
+INFO:root:Training iteration 5000 - 0.685714
+INFO:root:Training iteration 6000 - 0.685714
+INFO:root:Training iteration 7000 - 0.685714
+INFO:root:Training iteration 8000 - 0.685714
+INFO:root:Training iteration 9000 - 0.685714
+INFO:root:Training iteration 10000 - 0.685714
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5882|0.8219|0.6857
+INFO:root:Evaluating params: 100 100 0.0001
+INFO:root:Training iteration 1000 - 0.639594
+INFO:root:Training iteration 2000 - 0.640884
+INFO:root:Training iteration 3000 - 0.643678
+INFO:root:Training iteration 4000 - 0.650888
+INFO:root:Training iteration 5000 - 0.647059
+INFO:root:Training iteration 6000 - 0.643275
+INFO:root:Training iteration 7000 - 0.647059
+INFO:root:Training iteration 8000 - 0.643275
+INFO:root:Training iteration 9000 - 0.647059
+INFO:root:Training iteration 10000 - 0.654762
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5789|0.7534|0.6548
+INFO:root:Evaluating params: 100 100 0.001
+INFO:root:Training iteration 1000 - 0.640449
+INFO:root:Training iteration 2000 - 0.678161
+INFO:root:Training iteration 3000 - 0.690476
+INFO:root:Training iteration 4000 - 0.686391
+INFO:root:Training iteration 5000 - 0.674556
+INFO:root:Training iteration 6000 - 0.686391
+INFO:root:Training iteration 7000 - 0.682353
+INFO:root:Training iteration 8000 - 0.682353
+INFO:root:Training iteration 9000 - 0.682353
+INFO:root:Training iteration 10000 - 0.678363
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5918|0.7945|0.6784
+INFO:root:Evaluating params: 100 100 0.01
+INFO:root:Training iteration 1000 - 0.688525
+INFO:root:Training iteration 2000 - 0.662857
+INFO:root:Training iteration 3000 - 0.662857
+INFO:root:Training iteration 4000 - 0.662857
+INFO:root:Training iteration 5000 - 0.662857
+INFO:root:Training iteration 6000 - 0.662857
+INFO:root:Training iteration 7000 - 0.662857
+INFO:root:Training iteration 8000 - 0.662857
+INFO:root:Training iteration 9000 - 0.662857
+INFO:root:Training iteration 10000 - 0.662857
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5686|0.7945|0.6629
+INFO:root:Evaluating params: 150 25 0.0001
+INFO:root:Training iteration 1000 - 0.628019
+INFO:root:Training iteration 2000 - 0.644444
+INFO:root:Training iteration 3000 - 0.654971
+INFO:root:Training iteration 4000 - 0.666667
+INFO:root:Training iteration 5000 - 0.686391
+INFO:root:Training iteration 6000 - 0.678571
+INFO:root:Training iteration 7000 - 0.662577
+INFO:root:Training iteration 8000 - 0.650307
+INFO:root:Training iteration 9000 - 0.662577
+INFO:root:Training iteration 10000 - 0.675
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6207|0.7397|0.675
+INFO:root:Evaluating params: 150 25 0.001
+INFO:root:Training iteration 1000 - 0.650888
+INFO:root:Training iteration 2000 - 0.666667
+INFO:root:Training iteration 3000 - 0.631579
+INFO:root:Training iteration 4000 - 0.646707
+INFO:root:Training iteration 5000 - 0.650602
+INFO:root:Training iteration 6000 - 0.650602
+INFO:root:Training iteration 7000 - 0.650602
+INFO:root:Training iteration 8000 - 0.650602
+INFO:root:Training iteration 9000 - 0.646707
+INFO:root:Training iteration 10000 - 0.650307
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5889|0.726|0.6503
+INFO:root:Evaluating params: 150 25 0.01
+INFO:root:Training iteration 1000 - 0.685393
+INFO:root:Training iteration 2000 - 0.670588
+INFO:root:Training iteration 3000 - 0.674556
+INFO:root:Training iteration 4000 - 0.678571
+INFO:root:Training iteration 5000 - 0.674419
+INFO:root:Training iteration 6000 - 0.681818
+INFO:root:Training iteration 7000 - 0.681818
+INFO:root:Training iteration 8000 - 0.681818
+INFO:root:Training iteration 9000 - 0.681818
+INFO:root:Training iteration 10000 - 0.681818
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5825|0.8219|0.6818
+INFO:root:Evaluating params: 150 50 0.0001
+INFO:root:Training iteration 1000 - 0.636816
+INFO:root:Training iteration 2000 - 0.678161
+INFO:root:Training iteration 3000 - 0.670659
+INFO:root:Training iteration 4000 - 0.711656
+INFO:root:Training iteration 5000 - 0.708075
+INFO:root:Training iteration 6000 - 0.7
+INFO:root:Training iteration 7000 - 0.7
+INFO:root:Training iteration 8000 - 0.703704
+INFO:root:Training iteration 9000 - 0.716049
+INFO:root:Training iteration 10000 - 0.704403
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6512|0.7671|0.7044
+INFO:root:Evaluating params: 150 50 0.001
+INFO:root:Training iteration 1000 - 0.690476
+INFO:root:Training iteration 2000 - 0.678571
+INFO:root:Training iteration 3000 - 0.682635
+INFO:root:Training iteration 4000 - 0.678571
+INFO:root:Training iteration 5000 - 0.682635
+INFO:root:Training iteration 6000 - 0.686747
+INFO:root:Training iteration 7000 - 0.682635
+INFO:root:Training iteration 8000 - 0.682635
+INFO:root:Training iteration 9000 - 0.686747
+INFO:root:Training iteration 10000 - 0.682635
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6064|0.7808|0.6826
+INFO:root:Evaluating params: 150 50 0.01
+INFO:root:Training iteration 1000 - 0.632075
+INFO:root:Training iteration 2000 - 0.662857
+INFO:root:Training iteration 3000 - 0.662857
+INFO:root:Training iteration 4000 - 0.662857
+INFO:root:Training iteration 5000 - 0.662857
+INFO:root:Training iteration 6000 - 0.662857
+INFO:root:Training iteration 7000 - 0.662857
+INFO:root:Training iteration 8000 - 0.662857
+INFO:root:Training iteration 9000 - 0.662857
+INFO:root:Training iteration 10000 - 0.662857
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5686|0.7945|0.6629
+INFO:root:Evaluating params: 150 75 0.0001
+INFO:root:Training iteration 1000 - 0.65641
+INFO:root:Training iteration 2000 - 0.597701
+INFO:root:Training iteration 3000 - 0.650602
+INFO:root:Training iteration 4000 - 0.650602
+INFO:root:Training iteration 5000 - 0.646707
+INFO:root:Training iteration 6000 - 0.646707
+INFO:root:Training iteration 7000 - 0.642857
+INFO:root:Training iteration 8000 - 0.615385
+INFO:root:Training iteration 9000 - 0.634731
+INFO:root:Training iteration 10000 - 0.634731
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5638|0.726|0.6347
+INFO:root:Evaluating params: 150 75 0.001
+INFO:root:Training iteration 1000 - 0.655172
+INFO:root:Training iteration 2000 - 0.670588
+INFO:root:Training iteration 3000 - 0.662651
+INFO:root:Training iteration 4000 - 0.686747
+INFO:root:Training iteration 5000 - 0.678571
+INFO:root:Training iteration 6000 - 0.666667
+INFO:root:Training iteration 7000 - 0.674699
+INFO:root:Training iteration 8000 - 0.674699
+INFO:root:Training iteration 9000 - 0.674699
+INFO:root:Training iteration 10000 - 0.670659
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5957|0.7671|0.6707
+INFO:root:Evaluating params: 150 75 0.01
+INFO:root:Training iteration 1000 - 0.673913
+INFO:root:Training iteration 2000 - 0.666667
+INFO:root:Training iteration 3000 - 0.666667
+INFO:root:Training iteration 4000 - 0.666667
+INFO:root:Training iteration 5000 - 0.666667
+INFO:root:Training iteration 6000 - 0.666667
+INFO:root:Training iteration 7000 - 0.666667
+INFO:root:Training iteration 8000 - 0.666667
+INFO:root:Training iteration 9000 - 0.67033
+INFO:root:Training iteration 10000 - 0.67033
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5596|0.8356|0.6703
+INFO:root:Evaluating params: 150 100 0.0001
+INFO:root:Training iteration 1000 - 0.659794
+INFO:root:Training iteration 2000 - 0.644068
+INFO:root:Training iteration 3000 - 0.651429
+INFO:root:Training iteration 4000 - 0.662651
+INFO:root:Training iteration 5000 - 0.666667
+INFO:root:Training iteration 6000 - 0.641975
+INFO:root:Training iteration 7000 - 0.654088
+INFO:root:Training iteration 8000 - 0.670968
+INFO:root:Training iteration 9000 - 0.658228
+INFO:root:Training iteration 10000 - 0.654088
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6047|0.7123|0.6541
+INFO:root:Evaluating params: 150 100 0.001
+INFO:root:Training iteration 1000 - 0.651934
+INFO:root:Training iteration 2000 - 0.662722
+INFO:root:Training iteration 3000 - 0.662651
+INFO:root:Training iteration 4000 - 0.662651
+INFO:root:Training iteration 5000 - 0.650888
+INFO:root:Training iteration 6000 - 0.650888
+INFO:root:Training iteration 7000 - 0.650888
+INFO:root:Training iteration 8000 - 0.687117
+INFO:root:Training iteration 9000 - 0.687117
+INFO:root:Training iteration 10000 - 0.687117
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6222|0.7671|0.6871
+INFO:root:Evaluating params: 150 100 0.01
+INFO:root:Training iteration 1000 - 0.682081
+INFO:root:Training iteration 2000 - 0.682081
+INFO:root:Training iteration 3000 - 0.682081
+INFO:root:Training iteration 4000 - 0.682081
+INFO:root:Training iteration 5000 - 0.682081
+INFO:root:Training iteration 6000 - 0.682081
+INFO:root:Training iteration 7000 - 0.682081
+INFO:root:Training iteration 8000 - 0.682081
+INFO:root:Training iteration 9000 - 0.682081
+INFO:root:Training iteration 10000 - 0.682081
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.59|0.8082|0.6821
+INFO:root:Evaluating params: 200 25 0.0001
+INFO:root:Training iteration 1000 - 0.637681
+INFO:root:Training iteration 2000 - 0.626374
+INFO:root:Training iteration 3000 - 0.654762
+INFO:root:Training iteration 4000 - 0.646341
+INFO:root:Training iteration 5000 - 0.650307
+INFO:root:Training iteration 6000 - 0.634731
+INFO:root:Training iteration 7000 - 0.617284
+INFO:root:Training iteration 8000 - 0.638037
+INFO:root:Training iteration 9000 - 0.62963
+INFO:root:Training iteration 10000 - 0.634146
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5714|0.7123|0.6341
+INFO:root:Evaluating params: 200 25 0.001
+INFO:root:Training iteration 1000 - 0.647059
+INFO:root:Training iteration 2000 - 0.646707
+INFO:root:Training iteration 3000 - 0.634146
+INFO:root:Training iteration 4000 - 0.630303
+INFO:root:Training iteration 5000 - 0.626506
+INFO:root:Training iteration 6000 - 0.626506
+INFO:root:Training iteration 7000 - 0.626506
+INFO:root:Training iteration 8000 - 0.642424
+INFO:root:Training iteration 9000 - 0.642424
+INFO:root:Training iteration 10000 - 0.634146
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5714|0.7123|0.6341
+INFO:root:Evaluating params: 200 25 0.01
+INFO:root:Training iteration 1000 - 0.681319
+INFO:root:Training iteration 2000 - 0.681319
+INFO:root:Training iteration 3000 - 0.659091
+INFO:root:Training iteration 4000 - 0.659091
+INFO:root:Training iteration 5000 - 0.659091
+INFO:root:Training iteration 6000 - 0.659091
+INFO:root:Training iteration 7000 - 0.659091
+INFO:root:Training iteration 8000 - 0.659091
+INFO:root:Training iteration 9000 - 0.659091
+INFO:root:Training iteration 10000 - 0.659091
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5631|0.7945|0.6591
+INFO:root:Evaluating params: 200 50 0.0001
+INFO:root:Training iteration 1000 - 0.663102
+INFO:root:Training iteration 2000 - 0.678571
+INFO:root:Training iteration 3000 - 0.686391
+INFO:root:Training iteration 4000 - 0.682635
+INFO:root:Training iteration 5000 - 0.683544
+INFO:root:Training iteration 6000 - 0.675
+INFO:root:Training iteration 7000 - 0.679487
+INFO:root:Training iteration 8000 - 0.670886
+INFO:root:Training iteration 9000 - 0.670886
+INFO:root:Training iteration 10000 - 0.670886
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6235|0.726|0.6709
+INFO:root:Evaluating params: 200 50 0.001
+INFO:root:Training iteration 1000 - 0.658824
+INFO:root:Training iteration 2000 - 0.68323
+INFO:root:Training iteration 3000 - 0.692308
+INFO:root:Training iteration 4000 - 0.653595
+INFO:root:Training iteration 5000 - 0.657895
+INFO:root:Training iteration 6000 - 0.657895
+INFO:root:Training iteration 7000 - 0.666667
+INFO:root:Training iteration 8000 - 0.666667
+INFO:root:Training iteration 9000 - 0.666667
+INFO:root:Training iteration 10000 - 0.666667
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6375|0.6986|0.6667
+INFO:root:Evaluating params: 200 50 0.01
+INFO:root:Training iteration 1000 - 0.655556
+INFO:root:Training iteration 2000 - 0.636816
+INFO:root:Training iteration 3000 - 0.681319
+INFO:root:Training iteration 4000 - 0.681319
+INFO:root:Training iteration 5000 - 0.681319
+INFO:root:Training iteration 6000 - 0.681319
+INFO:root:Training iteration 7000 - 0.681319
+INFO:root:Training iteration 8000 - 0.681319
+INFO:root:Training iteration 9000 - 0.681319
+INFO:root:Training iteration 10000 - 0.681319
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5688|0.8493|0.6813
+INFO:root:Evaluating params: 200 75 0.0001
+INFO:root:Training iteration 1000 - 0.645161
+INFO:root:Training iteration 2000 - 0.651163
+INFO:root:Training iteration 3000 - 0.646341
+INFO:root:Training iteration 4000 - 0.666667
+INFO:root:Training iteration 5000 - 0.675
+INFO:root:Training iteration 6000 - 0.658385
+INFO:root:Training iteration 7000 - 0.654321
+INFO:root:Training iteration 8000 - 0.654321
+INFO:root:Training iteration 9000 - 0.654321
+INFO:root:Training iteration 10000 - 0.658385
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6023|0.726|0.6584
+INFO:root:Evaluating params: 200 75 0.001
+INFO:root:Training iteration 1000 - 0.666667
+INFO:root:Training iteration 2000 - 0.670886
+INFO:root:Training iteration 3000 - 0.666667
+INFO:root:Training iteration 4000 - 0.666667
+INFO:root:Training iteration 5000 - 0.675
+INFO:root:Training iteration 6000 - 0.675
+INFO:root:Training iteration 7000 - 0.675
+INFO:root:Training iteration 8000 - 0.675
+INFO:root:Training iteration 9000 - 0.675
+INFO:root:Training iteration 10000 - 0.675
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6207|0.7397|0.675
+INFO:root:Evaluating params: 200 75 0.01
+INFO:root:Training iteration 1000 - 0.67052
+INFO:root:Training iteration 2000 - 0.674286
+INFO:root:Training iteration 3000 - 0.674286
+INFO:root:Training iteration 4000 - 0.674286
+INFO:root:Training iteration 5000 - 0.674286
+INFO:root:Training iteration 6000 - 0.674286
+INFO:root:Training iteration 7000 - 0.674286
+INFO:root:Training iteration 8000 - 0.674286
+INFO:root:Training iteration 9000 - 0.674286
+INFO:root:Training iteration 10000 - 0.674286
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5784|0.8082|0.6743
+INFO:root:Evaluating params: 200 100 0.0001
+INFO:root:Training iteration 1000 - 0.635417
+INFO:root:Training iteration 2000 - 0.67052
+INFO:root:Training iteration 3000 - 0.650307
+INFO:root:Training iteration 4000 - 0.6375
+INFO:root:Training iteration 5000 - 0.65
+INFO:root:Training iteration 6000 - 0.65
+INFO:root:Training iteration 7000 - 0.65
+INFO:root:Training iteration 8000 - 0.654088
+INFO:root:Training iteration 9000 - 0.654088
+INFO:root:Training iteration 10000 - 0.654088
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6047|0.7123|0.6541
+INFO:root:Evaluating params: 200 100 0.001
+INFO:root:Training iteration 1000 - 0.685714
+INFO:root:Training iteration 2000 - 0.659091
+INFO:root:Training iteration 3000 - 0.662857
+INFO:root:Training iteration 4000 - 0.710059
+INFO:root:Training iteration 5000 - 0.710059
+INFO:root:Training iteration 6000 - 0.698225
+INFO:root:Training iteration 7000 - 0.698225
+INFO:root:Training iteration 8000 - 0.697674
+INFO:root:Training iteration 9000 - 0.698225
+INFO:root:Training iteration 10000 - 0.698225
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6146|0.8082|0.6982
+INFO:root:Evaluating params: 200 100 0.01
+INFO:root:Training iteration 1000 - 0.670391
+INFO:root:Training iteration 2000 - 0.670391
+INFO:root:Training iteration 3000 - 0.674157
+INFO:root:Training iteration 4000 - 0.674157
+INFO:root:Training iteration 5000 - 0.674157
+INFO:root:Training iteration 6000 - 0.674157
+INFO:root:Training iteration 7000 - 0.674157
+INFO:root:Training iteration 8000 - 0.674157
+INFO:root:Training iteration 9000 - 0.674157
+INFO:root:Training iteration 10000 - 0.674157
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5714|0.8219|0.6742
+INFO:root:Evaluating params: 250 25 0.0001
+INFO:root:Training iteration 1000 - 0.639594
+INFO:root:Training iteration 2000 - 0.670455
+INFO:root:Training iteration 3000 - 0.666667
+INFO:root:Training iteration 4000 - 0.678788
+INFO:root:Training iteration 5000 - 0.682927
+INFO:root:Training iteration 6000 - 0.687117
+INFO:root:Training iteration 7000 - 0.68323
+INFO:root:Training iteration 8000 - 0.6875
+INFO:root:Training iteration 9000 - 0.683544
+INFO:root:Training iteration 10000 - 0.6875
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6322|0.7534|0.6875
+INFO:root:Evaluating params: 250 25 0.001
+INFO:root:Training iteration 1000 - 0.682635
+INFO:root:Training iteration 2000 - 0.706587
+INFO:root:Training iteration 3000 - 0.715152
+INFO:root:Training iteration 4000 - 0.716049
+INFO:root:Training iteration 5000 - 0.703704
+INFO:root:Training iteration 6000 - 0.7
+INFO:root:Training iteration 7000 - 0.7
+INFO:root:Training iteration 8000 - 0.716049
+INFO:root:Training iteration 9000 - 0.699387
+INFO:root:Training iteration 10000 - 0.707317
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6374|0.7945|0.7073
+INFO:root:Evaluating params: 250 25 0.01
+INFO:root:Training iteration 1000 - 0.644068
+INFO:root:Training iteration 2000 - 0.644068
+INFO:root:Training iteration 3000 - 0.644068
+INFO:root:Training iteration 4000 - 0.648045
+INFO:root:Training iteration 5000 - 0.640449
+INFO:root:Training iteration 6000 - 0.640449
+INFO:root:Training iteration 7000 - 0.640449
+INFO:root:Training iteration 8000 - 0.640449
+INFO:root:Training iteration 9000 - 0.640449
+INFO:root:Training iteration 10000 - 0.640449
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5429|0.7808|0.6404
+INFO:root:Evaluating params: 250 50 0.0001
+INFO:root:Training iteration 1000 - 0.663158
+INFO:root:Training iteration 2000 - 0.65896
+INFO:root:Training iteration 3000 - 0.682353
+INFO:root:Training iteration 4000 - 0.674419
+INFO:root:Training iteration 5000 - 0.678363
+INFO:root:Training iteration 6000 - 0.678363
+INFO:root:Training iteration 7000 - 0.678363
+INFO:root:Training iteration 8000 - 0.678363
+INFO:root:Training iteration 9000 - 0.666667
+INFO:root:Training iteration 10000 - 0.662791
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5758|0.7808|0.6628
+INFO:root:Evaluating params: 250 50 0.001
+INFO:root:Training iteration 1000 - 0.695122
+INFO:root:Training iteration 2000 - 0.674699
+INFO:root:Training iteration 3000 - 0.703704
+INFO:root:Training iteration 4000 - 0.695652
+INFO:root:Training iteration 5000 - 0.68323
+INFO:root:Training iteration 6000 - 0.68323
+INFO:root:Training iteration 7000 - 0.68323
+INFO:root:Training iteration 8000 - 0.68323
+INFO:root:Training iteration 9000 - 0.6875
+INFO:root:Training iteration 10000 - 0.6875
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6322|0.7534|0.6875
+INFO:root:Evaluating params: 250 50 0.01
+INFO:root:Training iteration 1000 - 0.702381
+INFO:root:Training iteration 2000 - 0.698225
+INFO:root:Training iteration 3000 - 0.698225
+INFO:root:Training iteration 4000 - 0.698225
+INFO:root:Training iteration 5000 - 0.698225
+INFO:root:Training iteration 6000 - 0.698225
+INFO:root:Training iteration 7000 - 0.698225
+INFO:root:Training iteration 8000 - 0.698225
+INFO:root:Training iteration 9000 - 0.698225
+INFO:root:Training iteration 10000 - 0.698225
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6146|0.8082|0.6982
+INFO:root:Evaluating params: 250 75 0.0001
+INFO:root:Training iteration 1000 - 0.630435
+INFO:root:Training iteration 2000 - 0.674556
+INFO:root:Training iteration 3000 - 0.706587
+INFO:root:Training iteration 4000 - 0.678788
+INFO:root:Training iteration 5000 - 0.678788
+INFO:root:Training iteration 6000 - 0.674847
+INFO:root:Training iteration 7000 - 0.658385
+INFO:root:Training iteration 8000 - 0.662577
+INFO:root:Training iteration 9000 - 0.670732
+INFO:root:Training iteration 10000 - 0.662577
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6|0.7397|0.6626
+INFO:root:Evaluating params: 250 75 0.001
+INFO:root:Training iteration 1000 - 0.679012
+INFO:root:Training iteration 2000 - 0.691358
+INFO:root:Training iteration 3000 - 0.690909
+INFO:root:Training iteration 4000 - 0.691358
+INFO:root:Training iteration 5000 - 0.691358
+INFO:root:Training iteration 6000 - 0.679245
+INFO:root:Training iteration 7000 - 0.6875
+INFO:root:Training iteration 8000 - 0.679245
+INFO:root:Training iteration 9000 - 0.679245
+INFO:root:Training iteration 10000 - 0.679245
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.6279|0.7397|0.6792
+INFO:root:Evaluating params: 250 75 0.01
+INFO:root:Training iteration 1000 - 0.697143
+INFO:root:Training iteration 2000 - 0.697143
+INFO:root:Training iteration 3000 - 0.697143
+INFO:root:Training iteration 4000 - 0.697143
+INFO:root:Training iteration 5000 - 0.697143
+INFO:root:Training iteration 6000 - 0.689655
+INFO:root:Training iteration 7000 - 0.689655
+INFO:root:Training iteration 8000 - 0.689655
+INFO:root:Training iteration 9000 - 0.689655
+INFO:root:Training iteration 10000 - 0.64186
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.4859|0.9452|0.6419
+INFO:root:Evaluating params: 250 100 0.0001
+INFO:root:Training iteration 1000 - 0.648649
+INFO:root:Training iteration 2000 - 0.662857
+INFO:root:Training iteration 3000 - 0.693642
+INFO:root:Training iteration 4000 - 0.701754
+INFO:root:Training iteration 5000 - 0.709302
+INFO:root:Training iteration 6000 - 0.701754
+INFO:root:Training iteration 7000 - 0.697674
+INFO:root:Training iteration 8000 - 0.693642
+INFO:root:Training iteration 9000 - 0.693642
+INFO:root:Training iteration 10000 - 0.690058
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.602|0.8082|0.6901
+INFO:root:Evaluating params: 250 100 0.001
+INFO:root:Training iteration 1000 - 0.690058
+INFO:root:Training iteration 2000 - 0.701149
+INFO:root:Training iteration 3000 - 0.674556
+INFO:root:Training iteration 4000 - 0.670659
+INFO:root:Training iteration 5000 - 0.670659
+INFO:root:Training iteration 6000 - 0.670659
+INFO:root:Training iteration 7000 - 0.670659
+INFO:root:Training iteration 8000 - 0.670659
+INFO:root:Training iteration 9000 - 0.670659
+INFO:root:Training iteration 10000 - 0.670659
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5957|0.7671|0.6707
+INFO:root:Evaluating params: 250 100 0.01
+INFO:root:Training iteration 1000 - 0.644068
+INFO:root:Training iteration 2000 - 0.644068
+INFO:root:Training iteration 3000 - 0.644068
+INFO:root:Training iteration 4000 - 0.644068
+INFO:root:Training iteration 5000 - 0.644068
+INFO:root:Training iteration 6000 - 0.644068
+INFO:root:Training iteration 7000 - 0.644068
+INFO:root:Training iteration 8000 - 0.644068
+INFO:root:Training iteration 9000 - 0.644068
+INFO:root:Training iteration 10000 - 0.644068
+INFO:root:Returning model at iteration 9999 with test set precision|recall|Fscore: 0.5481|0.7808|0.6441
