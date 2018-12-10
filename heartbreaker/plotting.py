@@ -13,7 +13,7 @@ import shap
 import data_loader
 
 PLOTS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "plots")
-PLOTS_DPI = 600
+PLOTS_DPI = 450
 assert os.path.isdir(PLOTS_DIR)
 
 def histogram(values, xlabel, title, fname, nbins=40):
