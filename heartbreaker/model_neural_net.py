@@ -146,6 +146,11 @@ if __name__ == "__main__":
     learning_rates = [1e-4, 1e-3, 1e-2]
 
     for first_layer_size, second_layer_size, lr in itertools.product(first_layer_sizes, second_layer_sizes, learning_rates):
+        logging.info("Evaluating params: {} {} {}".format(
+            first_layer_size,
+            second_layer_size,
+            lr,
+        ))
         trained_nn, best_recall, best_prec, best_fscore, recall_history, precision_history, fscore_history = train_nn(
             NaiveNet(x_train.shape[1], first_layer=first_layer_size, second_layer=second_layer_size),
             x_train_std, y_train.astype(int), x_test_std, y_test.astype(int),
