@@ -68,7 +68,7 @@ def parameter_sweep(percentile=25, depth_candidates=[4, 6, 8], num_est_candidate
             hyperparams=parameters[best_index],
         ))
 
-def parameter_sweep_pipeline(percentile=25, depth_candidates=[4, 6, 8], num_est_candidates=[150, 200, 250, 300, 350], seed=8558):
+def parameter_sweep_pipeline(percentile=25, depth_candidates=[3, 4, 6, 8], num_est_candidates=[150, 200, 250, 300, 350, 400, 450], seed=8558):
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
     rates_discrete = util.continuous_to_categorical(rates, percentile_cutoff=75)
@@ -81,11 +81,14 @@ def parameter_sweep_pipeline(percentile=25, depth_candidates=[4, 6, 8], num_est_
     logging.info("XGBoost weight ratio: {}".format(np.round(weight_ratio, 4)))
 
     models = []
-    boosted_tree = xgboost.XGBClassifier(learning_rate=1e-2, scale_pos_weight=weight_ratio, random_state=8292, reg_lambda=0)
+    boosted_tree = xgboost.XGBClassifier(scale_pos_weight=weight_ratio, random_state=8292, reg_lambda=0)
     boosted_tree_params = {
         "max_depth": depth_candidates,
         "n_estimators": num_est_candidates,
-        "reg_alpha": [0.001, 0.01, 0.1, 1, 10, 100]
+        "reg_alpha": [0.001, 0.01, 0.1, 1, 10, 100],
+        "learning_rate": [1e-2, 1e-1],
+        "booster": ["gbtree", "gblinear", "dart"],
+        "min_child_weight": [1, 2, 3, 4],
     }
     models.append((boosted_tree, boosted_tree_params))
 
