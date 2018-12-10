@@ -216,6 +216,12 @@ def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC
 
     If desired_cols is an empty list, then we return the full data frame without subsetting columns
     """
+    code_to_names = {
+        "HC03_VC131": "Pct with health insurance coverage (civilian, non-institutionalized)",
+        "HC01_VC86": "Mean household income",
+        "HC01_VC85": "Median household income",
+        "HC01_VC118": "Per-capita income",
+    }
     def _create_county_identifier(county_state_name):
         """Helper function to reformat this table's county, state strings into our desired county state identifier strings"""
         county_raw, state_raw = county_state_name.split(',')
@@ -233,6 +239,8 @@ def load_acs_table(fname=ACS_TABLE, desired_cols=['HC03_VC131', 'HC01_VC86', 'HC
     custom_county_labels = [_create_county_identifier(s) for s in df['GEO.display-label']]
     assert len(set(custom_county_labels)) == len(custom_county_labels)  # Make sure no duplicates
     df_subcols.index = custom_county_labels
+    # Rename the features to be human readable
+    df_subcols.rename(code_to_names, inplace=True, axis='columns')
     return df_subcols
 
 def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=USDA_FOOD_ATLAS_DIR, trunc_extreme_vals=True, engineered_features=True):
@@ -262,7 +270,7 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
     # Feature engineering
     if engineered_features:
         # Divide per capita cost with per capita income
-        income_normalized_hc_cost = heart_disease_df['Standardized Risk-Adjusted Per Capita Costs'] / heart_disease_df['HC01_VC118']
+        income_normalized_hc_cost = heart_disease_df['Standardized Risk-Adjusted Per Capita Costs'] / heart_disease_df['Per-capita income']
         logging.info("Appending income-normalized healthcare costs feature with min median max: {} {} {}".format(
             np.round(np.min(income_normalized_hc_cost), 4),
             np.round(np.nanmedian(income_normalized_hc_cost), 4),
