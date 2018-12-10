@@ -39,11 +39,11 @@ def eval_net_on_test_data(nn, test_data, test_target):
     net_out_test = nn(test_data)
     preds = np.array(net_out_test.data.cpu().max(1)[1])
     preds = np.array(np.round(preds, decimals=0), dtype=int)  # Ensure we are dealing with integer data
-    both_pos = np.intersect1d(np.where(test_target.cpu()), np.where(preds))
+    both_pos = np.intersect1d(np.where(test_target.cpu().numpy()), np.where(preds))
     total_positive = np.sum(preds)
     recall = len(both_pos) / sum(test_target.cpu().numpy())
     precision = len(both_pos) / np.sum(preds) if np.sum(preds) else 0.0
-    fpr = (total_positive - len(both_pos)) / len(np.where(test_target == 0)[0])  # false positives / total negatives
+    fpr = (total_positive - len(both_pos)) / len(np.where(test_target.cpu().numpy() == 0)[0])  # false positives / total negatives
     return recall, precision, fpr, len(both_pos), (total_positive - len(both_pos)), sum(test_target.cpu().numpy()) - len(both_pos)
     
 def train_nn(net, x_train, y_train, x_test, y_test, f_beta=None, weight_ratio=2, weight_decay=0, num_iter=5000, lr=1e-4, seed=6321):
