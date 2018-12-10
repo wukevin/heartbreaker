@@ -109,7 +109,7 @@ def feature_importance(percentile=25):
     model = xgboost.XGBClassifier(max_depth=8, learning_rate=1e-2, n_estimators=350, reg_alpha=1, random_state=8292)  # 6 and 250 for depth and n_estimators were found via parameter sweep
     model.fit(data, rates_high_low)
 
-    plotting.plot_shap_tree_summary(model, data, data, os.path.join(plotting.PLOTS_DIR, "shap_xgboost_importance.png"))
+    plotting.plot_shap_tree_summary(model, data, data, output_fname=os.path.join(plotting.PLOTS_DIR, "shap_xgboost_importance.png"))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

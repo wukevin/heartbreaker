@@ -54,13 +54,14 @@ def make_histograms():
     print(np.nanmedian(data['VEG_FARMS12']))
     print(np.nanmax(data['VEG_FARMS12']))
 
-def plot_shap_tree_summary(model, baseline_data, eval_data, output_fname=""):
+def plot_shap_tree_summary(model, baseline_data, eval_data, num_features=15, output_fname=""):
     """Create a shap summary plot"""
     explainer = shap.TreeExplainer(model, baseline_data)
     shap_values = explainer.shap_values(eval_data)
     shap.summary_plot(
         shap_values,
         eval_data,
+        max_display=num_features,
         class_names=["Low risk", "High risk"],
         show=False if output_fname else False  # Allows for saving below
     )
