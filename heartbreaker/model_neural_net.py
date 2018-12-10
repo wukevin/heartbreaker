@@ -253,10 +253,10 @@ def eval_params_on_train(first_layer=150, second_layer=100, lr=1e-4):
         all_truths.extend(y_test)
         all_preds.extend(preds)
 
-    logging.info("Accuracy: {}".format(accuracy_score(all_truths, all_preds)))
-    logging.info("Precision: {}".format(precision_score(all_truths, all_preds)))
-    logging.info("Recall: {}".format(recall_score(all_truths, all_preds)))
-    logging.info("F1 score: {}".format(f1_score(all_truths, all_preds)))
+    logging.info("Train Accuracy: {}".format(accuracy_score(all_truths, all_preds)))
+    logging.info("Train Precision: {}".format(precision_score(all_truths, all_preds)))
+    logging.info("Train Recall: {}".format(recall_score(all_truths, all_preds)))
+    logging.info("Train F1 score: {}".format(f1_score(all_truths, all_preds)))
 
 def eval_params_on_test(first_layer=150, second_layer=100, lr=1e-4):
     if torch.cuda.is_available():
@@ -295,5 +295,5 @@ def eval_params_on_test(first_layer=150, second_layer=100, lr=1e-4):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     # gridsearch()
-    # eval_params_on_train()
+    eval_params_on_train()
     eval_params_on_test()
