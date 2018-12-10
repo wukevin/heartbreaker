@@ -139,13 +139,18 @@ def load_heart_disease_table(fname=HEART_DISEASE_FPATH):
     )
     return retval
 
-def load_usda_food_env_table(fname):
+def load_usda_food_env_table(fname, var_name_definition_file=os.path.join(USDA_FOOD_ATLAS_DIR, "variable_list.csv")):
     """
     General function for reading in any of the csv files that come from the USDA food
     environment atlas (excluding the supplementary tables). In doing so, it drops all
     non-numeric data. As a data cleaning measure, we also drop all instances of any county
     that shows up more than once.
     """
+    def load_food_env_atlas_names(fname):
+        """Read in the table mapping the variable codes to names"""
+        df = pd.read_csv(fname)
+        return {k:v for k, v in zip(df['Variable Code'], df['Variable Name'])}
+
     if os.path.basename(fname).startswith("supplemental"):
         raise NotImplementedError("Cannot read supplemental tables")
     logging.info("Reading in {}".format(fname))
@@ -173,8 +178,11 @@ def load_usda_food_env_table(fname):
         year = int(column[-2:])
         if (year > 14):
             future_knowledge_cols.append(column)
-                
     df.drop(columns=future_knowledge_cols, inplace=True)
+
+    # Replace the variable codes with human readable labels
+    var_codes_to_names = load_food_env_atlas_names(var_name_definition_file)
+    df.rename(var_codes_to_names, inplace=True, axis='columns')
 
     return df
 
@@ -260,7 +268,7 @@ def load_all_data(heart_disease_fname=HEART_DISEASE_FPATH, usda_food_env_folder=
             np.round(np.nanmedian(income_normalized_hc_cost), 4),
             np.round(np.max(income_normalized_hc_cost), 4),
         ))
-        heart_disease_df['eng_healthcare_costs_income_normalized'] = income_normalized_hc_cost
+        heart_disease_df['Healthcare costs income norm'] = income_normalized_hc_cost
 
     if trunc_extreme_vals:
         heart_disease_df = util.truncate_extreme_values(heart_disease_df)
