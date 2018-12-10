@@ -216,7 +216,7 @@ def gridsearch():
     best_index = np.argmax(f1_scores)
     logging.info("Best model params: {}".format(param_combos[best_index]))
 
-def eval_params_on_train(**kwargs):
+def eval_params_on_train(first_layer=150, second_layer=100, lr=1e-4):
     if torch.cuda.is_available():
         torch.cuda.set_device(2)
         torch.set_default_tensor_type(torch.cuda.FloatTensor)
@@ -243,7 +243,7 @@ def eval_params_on_train(**kwargs):
         # Apply the scaler to the test data
         x_test_std = sc.transform(x_test)
         preds = train_nn_simple(
-            NaiveNet(x_train.shape[1], **kwargs),
+            NaiveNet(x_train.shape[1], first_layer=first_layer, second_layer=second_layer),
             x_train_std, y_train.astype(int), x_test_std, y_test.astype(int),
             weight_ratio=1,
             lr=lr,
@@ -260,4 +260,4 @@ def eval_params_on_train(**kwargs):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     # gridsearch()
-    eval_params_on_train
+    eval_params_on_train()
