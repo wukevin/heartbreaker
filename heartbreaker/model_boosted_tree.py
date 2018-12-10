@@ -182,16 +182,20 @@ def feature_importance(percentile=25):
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
     rates_high_low = util.continuous_to_categorical(rates, 100 - percentile)
-    
-    model = xgboost.XGBClassifier(max_depth=8, learning_rate=1e-2, n_estimators=350, reg_alpha=1, random_state=8292)  # 6 and 250 for depth and n_estimators were found via parameter sweep
+
+    x_train, x_test, y_train, y_test = train_test_split(data, rates_high_low, test_size=0.10, random_state=seed)
+
+    weights = class_weight.compute_class_weight('balanced', [0, 1], y_train)
+    weight_ratio = weights[1] / weights[0]
+    model = xgboost.XGBClassifier(booster='gbtree', lr=0.1, max_depth=6, min_child_weight=1, n_estimators=150, reg_alpha=10, reg_lambda=0, random_state=8292)  # 6 and 250 for depth and n_estimators were found via parameter sweep
     model.fit(data, rates_high_low)
 
-    plotting.plot_shap_tree_summary(model, data, data, output_fname=os.path.join(plotting.PLOTS_DIR, "shap_xgboost_importance.png"))
+    plotting.plot_shap_tree_summary(model, x_train, x_test, output_fname=os.path.join(plotting.PLOTS_DIR, "shap_xgboost_importance.png"))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     # parameter_sweep()
-    # feature_importance()
     # parameter_sweep_pipeline()
     eval_on_train_set()
     eval_on_test_set()
+    feature_importance()
