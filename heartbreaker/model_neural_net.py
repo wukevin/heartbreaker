@@ -8,6 +8,7 @@ import collections
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import cross_validate, train_test_split, KFold
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 import torch
 
@@ -16,13 +17,13 @@ import util
 
 class NaiveNet(torch.nn.Dropout):
     """Neural net"""
-    def __init__(self, num_features, num_classes=2, first_layer=150, second_layer=25, activation='selu'):
+    def __init__(self, num_features, num_classes=2, first_layer=150, second_layer=25, activation='selu', dropout=0.1):
         super(type(self), self).__init__()
         self.fc1 = torch.nn.Linear(num_features, first_layer, bias=True)
         self.fc2 = torch.nn.Linear(first_layer, second_layer, bias=True)
         self.fc3 = torch.nn.Linear(second_layer, num_classes, bias=True)
         self.activation = activation
-        self.p = 0.1
+        self.p = dropout
 
     def forward(self, x):
         if self.activation.lower() == 'relu':
@@ -116,6 +117,46 @@ def train_nn(net, x_train, y_train, x_test, y_test, f_beta=None, weight_ratio=2,
      ))
     return best, recall_values[best_iteration], precision_values[best_iteration],fscore_values[best_iteration], recall_values, precision_values, fscore_values
 
+def train_nn_simple(net, x_train, y_train, x_test, y_test, weight_ratio=2, weight_decay=0, num_iter=10000, lr=1e-3, seed=6321):
+    """
+    Trains the neural network, returning the predictions on test set
+    """
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+    np.random.seed(seed)
+    
+    # Calculate balanced class weights (originally used [1, 250])
+    num_samples = x_train.shape[0]
+    bin_count = np.array([sum(y_train == 0), sum(y_train == 1)], dtype=int)
+    weights = num_samples / (2 * bin_count)
+    weights[1] *= 1 + weight_ratio * weight_ratio  # Upweight the positive cases similar to how f-score weights
+
+    optimizer = torch.optim.Adam(net.parameters(), lr=lr, amsgrad=True, weight_decay=weight_decay)  # weight decay is analogous to l2 regularization. 1e-3 seems to be a good value.
+    criterion = torch.nn.CrossEntropyLoss(weight=torch.tensor(weights, dtype=torch.float32))
+
+    data = torch.autograd.Variable(torch.tensor(x_train, dtype=torch.float32))
+    target = torch.autograd.Variable(torch.tensor(y_train))
+    test_data = torch.autograd.Variable(torch.tensor(x_test, dtype=torch.float32))
+    test_target = torch.autograd.Variable(torch.tensor(y_test))
+
+    for i in range(num_iter):
+        optimizer.zero_grad()
+        net_out = net(data)
+        loss = criterion(net_out, target)
+        loss.backward()
+        optimizer.step()
+        if (i + 1) % 1000 == 0:  # Record incrementally
+            recall, precision, fpr, tp, fp, fn = eval_net_on_test_data(net, test_data, test_target)
+    
+    # recall, precision, fpr, tp, fp, fn = eval_net_on_test_data(net, test_data, test_target)
+    # fscore = util.f_beta_score(tp, fp, fn, beta=1)
+
+    net_out_test = net(test_data)
+    preds = np.array(net_out_test.data.cpu().max(1)[1])
+    preds = np.array(np.round(preds, decimals=0), dtype=int)
+
+    return preds
+
 def gridsearch():
     """Best parameters seem to be 250 25 0.001"""
     if torch.cuda.is_available():
@@ -132,31 +173,48 @@ def gridsearch():
     rates = data.pop('heart_disease_mortality')
     y = util.continuous_to_categorical(rates, percentile_cutoff=75)
     
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.10, random_state=858)
-    
-    sc = StandardScaler()
-    # Fit the scaler to the training data and transform
-    x_train_std = sc.fit_transform(x_train)
-    # Apply the scaler to the test data
-    x_test_std = sc.transform(x_test)
+    partitions, holdout = util.split_train_valid_k_fold(x, y)
     
     # Gridsearch for hyperparameters
     first_layer_sizes = [100, 150, 200, 250]
     second_layer_sizes = [25, 50, 75, 100]
     learning_rates = [1e-4, 1e-3, 1e-2]
 
-    for first_layer_size, second_layer_size, lr in itertools.product(first_layer_sizes, second_layer_sizes, learning_rates):
+    param_combos = list(itertools.product(first_layer_sizes, second_layer_sizes, learning_rates))
+    f1_scores = []
+    for first_layer_size, second_layer_size, lr in param_combos:
         logging.info("Evaluating params: {} {} {}".format(
             first_layer_size,
             second_layer_size,
             lr,
         ))
-        trained_nn, best_recall, best_prec, best_fscore, recall_history, precision_history, fscore_history = train_nn(
-            NaiveNet(x_train.shape[1], first_layer=first_layer_size, second_layer=second_layer_size),
-            x_train_std, y_train.astype(int), x_test_std, y_test.astype(int),
-            weight_ratio=1,
-            lr=lr,
-        )
+        all_truths = []
+        all_preds = []
+        for part in partitions:
+            x_train, y_train, x_test, y_test = part
+            sc = StandardScaler()
+            # Fit the scaler to the training data and transform
+            x_train_std = sc.fit_transform(x_train)
+            # Apply the scaler to the test data
+            x_test_std = sc.transform(x_test)
+            preds = train_nn_simple(
+                NaiveNet(x_train.shape[1], first_layer=first_layer_size, second_layer=second_layer_size),
+                x_train_std, y_train.astype(int), x_test_std, y_test.astype(int),
+                weight_ratio=1,
+                lr=lr,
+            )
+            all_truths.extend(y_test)
+            all_preds.extend(preds)
+        s = f1_score(all_truths, all_preds)
+        logging.info("Evaluating params {} {} {} | {}".format(
+            np.round(first_layer_size, 4),
+            np.round(second_layer_size, 4),
+            np.round(lr, 4),
+            s
+        ))
+        f1_scores.append(s)
+    best_index = np.argmax(f1_scores)
+    logging.info("Best model params: {}".format(param_combos[best_index]))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
