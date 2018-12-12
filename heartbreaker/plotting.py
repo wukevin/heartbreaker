@@ -13,7 +13,7 @@ import shap
 import data_loader
 
 PLOTS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "plots")
-PLOTS_DPI = 600
+PLOTS_DPI = 450
 assert os.path.isdir(PLOTS_DIR)
 
 def histogram(values, xlabel, title, fname, nbins=40):
@@ -54,13 +54,14 @@ def make_histograms():
     print(np.nanmedian(data['VEG_FARMS12']))
     print(np.nanmax(data['VEG_FARMS12']))
 
-def plot_shap_tree_summary(model, baseline_data, eval_data, output_fname=""):
+def plot_shap_tree_summary(model, baseline_data, eval_data, num_features=15, output_fname=""):
     """Create a shap summary plot"""
     explainer = shap.TreeExplainer(model, baseline_data)
     shap_values = explainer.shap_values(eval_data)
     shap.summary_plot(
         shap_values,
         eval_data,
+        max_display=num_features,
         class_names=["Low risk", "High risk"],
         show=False if output_fname else False  # Allows for saving below
     )

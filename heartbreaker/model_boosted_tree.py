@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import sklearn
 from sklearn.model_selection import train_test_split, cross_validate, KFold
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.utils import class_weight
 
 import xgboost
@@ -17,7 +18,9 @@ import util
 import plotting
 from classification_v2 import get_gscv, adjust_params
 
-def xgb(x_train, y_train, x_test, y_test, depth=6, n_est=250):
+seed = 754927
+
+def xgb(x_train, y_train, x_test, y_test, depth=8, n_est=350):
     """
     Train a boosted tree and return performance on testing data
 
@@ -68,7 +71,7 @@ def parameter_sweep(percentile=25, depth_candidates=[4, 6, 8], num_est_candidate
             hyperparams=parameters[best_index],
         ))
 
-def parameter_sweep_pipeline(percentile=25, depth_candidates=[4, 6, 8], num_est_candidates=[150, 200, 250, 300, 350], seed=8558):
+def parameter_sweep_pipeline(percentile=25, depth_candidates=[3, 4, 6, 8], num_est_candidates=[150, 200, 250, 300, 350, 400, 450], seed=8558):
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
     rates_discrete = util.continuous_to_categorical(rates, percentile_cutoff=75)
@@ -81,11 +84,14 @@ def parameter_sweep_pipeline(percentile=25, depth_candidates=[4, 6, 8], num_est_
     logging.info("XGBoost weight ratio: {}".format(np.round(weight_ratio, 4)))
 
     models = []
-    boosted_tree = xgboost.XGBClassifier(learning_rate=1e-2, scale_pos_weight=weight_ratio, random_state=8292, reg_lambda=0)
+    boosted_tree = xgboost.XGBClassifier(scale_pos_weight=weight_ratio, random_state=8292, reg_lambda=0)
     boosted_tree_params = {
         "max_depth": depth_candidates,
         "n_estimators": num_est_candidates,
-        "reg_alpha": [0.001, 0.01, 0.1, 1, 10, 100]
+        "reg_alpha": [0.001, 0.01, 0.1, 1, 10, 100],
+        "learning_rate": [1e-2, 1e-1],
+        "booster": ["gbtree", "gblinear", "dart"],
+        "min_child_weight": [1, 2, 3, 4],
     }
     models.append((boosted_tree, boosted_tree_params))
 
@@ -100,19 +106,96 @@ def parameter_sweep_pipeline(percentile=25, depth_candidates=[4, 6, 8], num_est_
         logging.info("Best Parameters")
         logging.info(cv.best_params_)
 
+def eval_on_test_set(booster='gbtree', lr=0.1, max_depth=6, min_child_weight=1, n_estimators=150, reg_alpha=10):
+    """The params in the above are from expanded grid search"""
+    data = util.impute_by_col(data_loader.load_all_data(), np.mean)
+    rates = data.pop('heart_disease_mortality')
+    rates_discrete = util.continuous_to_categorical(rates, percentile_cutoff=75)
+    x = data
+    y = rates_discrete
+    x_train, x_test, y_train, y_test = train_test_split(x, rates_discrete, test_size=0.10, random_state=seed)
+
+    weights = class_weight.compute_class_weight('balanced', [0, 1], y_train)
+    weight_ratio = weights[1] / weights[0]
+    logging.info("XGBoost weight ratio: {}".format(np.round(weight_ratio, 4)))
+
+    model = xgboost.XGBClassifier(
+        booster=booster,
+        lr=lr,
+        max_depth=max_depth,
+        min_child_weight=min_child_weight,
+        n_estimators=n_estimators,
+        reg_alpha=reg_alpha,
+        scale_pos_weight=weight_ratio,
+        random_state=8292,
+        reg_lambda=0,
+    )
+
+    model.fit(x_train, y_train)
+    preds = model.predict(x_test)
+    
+    logging.info("Test Accuracy: {}".format(accuracy_score(y_test, preds)))
+    logging.info("Test Precision: {}".format(precision_score(y_test, preds)))
+    logging.info("Test Recall: {}".format(recall_score(y_test, preds)))
+    logging.info("Test F1 score: {}".format(f1_score(y_test, preds)))
+
+def eval_on_train_set(booster='gbtree', lr=0.1, max_depth=6, min_child_weight=1, n_estimators=150, reg_alpha=10):
+    """The params in the above are from expanded grid search"""
+    data = util.impute_by_col(data_loader.load_all_data(), np.mean)
+    rates = data.pop('heart_disease_mortality')
+    rates_discrete = util.continuous_to_categorical(rates, percentile_cutoff=75)
+    x = data
+    y = rates_discrete
+    partitions, holdout = util.split_train_valid_k_fold(x, y)
+
+    all_truths = []
+    all_preds = []
+    for part in partitions:
+        x_train, y_train, x_test, y_test = part
+        weights = class_weight.compute_class_weight('balanced', [0, 1], y_train)
+        weight_ratio = weights[1] / weights[0]
+        logging.info("XGBoost weight ratio: {}".format(np.round(weight_ratio, 4)))
+
+        model = xgboost.XGBClassifier(
+            booster=booster,
+            lr=lr,
+            max_depth=max_depth,
+            min_child_weight=min_child_weight,
+            n_estimators=n_estimators,
+            reg_alpha=reg_alpha,
+            scale_pos_weight=weight_ratio,
+            random_state=8292,
+            reg_lambda=0,
+        )
+        model.fit(x_train, y_train)
+        preds = model.predict(x_test)
+        all_truths.extend(y_test)
+        all_preds.extend(preds)
+    
+    logging.info("Train Accuracy: {}".format(accuracy_score(all_truths, all_preds)))
+    logging.info("Train Precision: {}".format(precision_score(all_truths, all_preds)))
+    logging.info("Train Recall: {}".format(recall_score(all_truths, all_preds)))
+    logging.info("Train F1 score: {}".format(f1_score(all_truths, all_preds)))
+
 def feature_importance(percentile=25):
     """Evaluate feature importance by fitting a model to ALL the data"""
     data = util.impute_by_col(data_loader.load_all_data(), np.mean)
     rates = data.pop('heart_disease_mortality')
     rates_high_low = util.continuous_to_categorical(rates, 100 - percentile)
-    
-    model = xgboost.XGBClassifier(max_depth=6, learning_rate=1e-2, n_estimators=250, random_state=8292)  # 6 and 250 for depth and n_estimators were found via parameter sweep
+
+    x_train, x_test, y_train, y_test = train_test_split(data, rates_high_low, test_size=0.10, random_state=seed)
+
+    weights = class_weight.compute_class_weight('balanced', [0, 1], y_train)
+    weight_ratio = weights[1] / weights[0]
+    model = xgboost.XGBClassifier(booster='gbtree', lr=0.1, max_depth=6, min_child_weight=1, n_estimators=150, reg_alpha=10, reg_lambda=0, random_state=8292)  # 6 and 250 for depth and n_estimators were found via parameter sweep
     model.fit(data, rates_high_low)
 
-    plotting.plot_shap_tree_summary(model, data, data, os.path.join(plotting.PLOTS_DIR, "shap_xgboost_importance.png"))
+    plotting.plot_shap_tree_summary(model, x_train, x_test, output_fname=os.path.join(plotting.PLOTS_DIR, "shap_xgboost_importance.png"))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     # parameter_sweep()
-    # feature_importance()
-    parameter_sweep_pipeline()
+    # parameter_sweep_pipeline()
+    eval_on_train_set()
+    eval_on_test_set()
+    feature_importance()
