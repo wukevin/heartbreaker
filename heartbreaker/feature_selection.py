@@ -91,7 +91,7 @@ def feature_forward_search(partitions, num_features, model, **kwargs):
     selected_feature_names = []
     selected_feature_scores = []
 
-    pool = multiprocessing.Pool(int(multiprocessing.cpu_count() / 2))
+    pool = multiprocessing.Pool(int(multiprocessing.cpu_count()))
     while len(selected_feature_names) < min(num_features, len(all_feature_names)):
         # Define which features we're considering
         candidate_features = [feature for feature in all_feature_names if feature not in selected_feature_names]
