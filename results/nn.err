@@ -1,0 +1,1101 @@
+INFO:root:TITAN X (Pascal)
+INFO:root:3
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/CDC_heart_disease_mortality/Heart_Disease_Mortality_Data_Among_US_Adults_35_plus_by_State_Territory_and_County.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/access.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/assistance.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/health.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/insecurity.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/local.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/prices_taxes.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/restaurants.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/socioeconomic.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/USDA_food_environment_atlas/stores.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/ACS/ACS_14_5YR_DP03_with_ann.csv
+INFO:root:Reading in /afs/cs.stanford.edu/u/wukevin/projects/heartbreaker_nn/data/CMS_public_use_file/State_County_2014_Table.csv
+/cluster/u/wukevin/conda/envs/heartbreaker/lib/python3.6/site-packages/pandas/core/indexing.py:543: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  self.obj[item] = s
+INFO:root:Appending income-normalized healthcare costs feature with min median max: 0.1337 0.4194 1.5735
+INFO:root:Skip extreme value truncation for column SNAP simplified reporting, 2009*
+INFO:root:Skip extreme value truncation for column FDPIR Sites, 2012
+INFO:root:Skip extreme value truncation for column Small slaughterhouse facilities (% change), 2007 - 12
+INFO:root:Skip extreme value truncation for column Greenhouse veg and fresh herb sq feet, 2007
+INFO:root:Skip extreme value truncation for column Greenhouse veg and fresh herb sq feet/1,000 pop, 2007
+INFO:root:Skip extreme value truncation for column Farm to school program, 2009
+INFO:root:Skip extreme value truncation for column Persistent-poverty counties, 2010
+INFO:root:Skip extreme value truncation for column Persistent-child-poverty counties, 2010
+INFO:root:Skip extreme value truncation for column Population-loss counties, 2010
+INFO:root:Skip extreme value truncation for column Supercenters & club stores (% change), 2009-14
+INFO:root:75 percentile correspond to a value of 409.8
+INFO:root:Categorized 750 of 2997 values as high
+INFO:root:Holding out 300 indices for testing
+INFO:root:K-fold 0: (270, 197) testing (2427, 197) training
+INFO:root:K-fold 1: (270, 197) testing (2427, 197) training
+INFO:root:K-fold 2: (270, 197) testing (2427, 197) training
+INFO:root:K-fold 3: (270, 197) testing (2427, 197) training
+INFO:root:K-fold 4: (270, 197) testing (2427, 197) training
+INFO:root:K-fold 5: (270, 197) testing (2427, 197) training
+INFO:root:K-fold 6: (270, 197) testing (2427, 197) training
+INFO:root:K-fold 7: (270, 197) testing (2427, 197) training
+INFO:root:K-fold 8: (270, 197) testing (2427, 197) training
+INFO:root:K-fold 9: (267, 197) testing (2430, 197) training
+INFO:root:Evaluating params: 100 25 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 25 0.0001 | 0.7051027170311466
+INFO:root:Evaluating params: 100 25 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 25 0.001 | 0.6908115358819583
+INFO:root:Evaluating params: 100 25 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 25 0.01 | 0.6959896507115136
+INFO:root:Evaluating params: 100 50 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 50 0.0001 | 0.696498054474708
+INFO:root:Evaluating params: 100 50 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 50 0.001 | 0.6911764705882354
+INFO:root:Evaluating params: 100 50 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 50 0.01 | 0.6873786407766991
+INFO:root:Evaluating params: 100 75 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 75 0.0001 | 0.6886543535620053
+INFO:root:Evaluating params: 100 75 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 75 0.001 | 0.6940942269409422
+INFO:root:Evaluating params: 100 75 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 75 0.01 | 0.7100893997445722
+INFO:root:Evaluating params: 100 100 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 100 0.0001 | 0.700587084148728
+INFO:root:Evaluating params: 100 100 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 100 0.001 | 0.6973947895791582
+INFO:root:Evaluating params: 100 100 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 100 100 0.01 | 0.7072100313479625
+INFO:root:Evaluating params: 150 25 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 25 0.0001 | 0.6994680851063829
+INFO:root:Evaluating params: 150 25 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 25 0.001 | 0.7004669779853235
+INFO:root:Evaluating params: 150 25 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 25 0.01 | 0.699614890885751
+INFO:root:Evaluating params: 150 50 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 50 0.0001 | 0.6961250849762067
+INFO:root:Evaluating params: 150 50 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 50 0.001 | 0.6948356807511737
+INFO:root:Evaluating params: 150 50 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 50 0.01 | 0.7032136105860115
+INFO:root:Evaluating params: 150 75 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 75 0.0001 | 0.6886792452830189
+INFO:root:Evaluating params: 150 75 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 75 0.001 | 0.696058784235137
+INFO:root:Evaluating params: 150 75 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 75 0.01 | 0.685678859268444
+INFO:root:Evaluating params: 150 100 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 100 0.0001 | 0.7133243606998655
+INFO:root:Evaluating params: 150 100 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 100 0.001 | 0.7023411371237458
+INFO:root:Evaluating params: 150 100 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 150 100 0.01 | 0.685885885885886
+INFO:root:Evaluating params: 200 25 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 25 0.0001 | 0.7026666666666667
+INFO:root:Evaluating params: 200 25 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 25 0.001 | 0.6993197278911565
+INFO:root:Evaluating params: 200 25 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 25 0.01 | 0.695932859909619
+INFO:root:Evaluating params: 200 50 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 50 0.0001 | 0.704225352112676
+INFO:root:Evaluating params: 200 50 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 50 0.001 | 0.703429724277068
+INFO:root:Evaluating params: 200 50 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 50 0.01 | 0.6888178913738018
+INFO:root:Evaluating params: 200 75 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 75 0.0001 | 0.7007397444519167
+INFO:root:Evaluating params: 200 75 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 75 0.001 | 0.6942934782608696
+INFO:root:Evaluating params: 200 75 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 75 0.01 | 0.6855763427881713
+INFO:root:Evaluating params: 200 100 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 100 0.0001 | 0.697112155809268
+INFO:root:Evaluating params: 200 100 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 100 0.001 | 0.7029900332225913
+INFO:root:Evaluating params: 200 100 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 200 100 0.01 | 0.6830769230769229
+INFO:root:Evaluating params: 250 25 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 25 0.0001 | 0.7028839704896043
+INFO:root:Evaluating params: 250 25 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 25 0.001 | 0.7014218009478673
+INFO:root:Evaluating params: 250 25 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 25 0.01 | 0.699748743718593
+INFO:root:Evaluating params: 250 50 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 50 0.0001 | 0.703030303030303
+INFO:root:Evaluating params: 250 50 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 50 0.001 | 0.6945945945945946
+INFO:root:Evaluating params: 250 50 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 50 0.01 | 0.6805555555555555
+INFO:root:Evaluating params: 250 75 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 75 0.0001 | 0.7072346179851251
+INFO:root:Evaluating params: 250 75 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 75 0.001 | 0.7045300878972278
+INFO:root:Evaluating params: 250 75 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 75 0.01 | 0.6986469864698648
+INFO:root:Evaluating params: 250 100 0.0001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 100 0.0001 | 0.70306258322237
+INFO:root:Evaluating params: 250 100 0.001
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 100 0.001 | 0.7073007367716009
+INFO:root:Evaluating params: 250 100 0.01
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+heartbreaker/model_neural_net.py:38: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  return torch.nn.functional.softmax(x)
+INFO:root:Evaluating params 250 100 0.01 | 0.6783555018137849
+INFO:root:Best model params: (150, 100, 0.0001)
