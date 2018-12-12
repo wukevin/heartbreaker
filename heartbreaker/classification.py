@@ -125,11 +125,6 @@ def main():
     rf = RandomForestClassifier(criterion="entropy", max_depth=None, max_features='sqrt', min_samples_leaf=0.01, n_estimators=100, class_weight='balanced', random_state=seed)
     models.append(rf)
     
-    weights = class_weight.compute_class_weight('balanced', [0, 1], y_train)
-    weight_ratio = weights[1] / weights[0]
-    xgb = xgboost.XGBClassifier(max_depth=8, learning_rate=1e-2, n_estimators=350, reg_alpha=1, reg_lambda=0, scale_pos_weight=weight_ratio, random_state=seed)
-    models.append(xgb)
-    
     tex = "\\documentclass[]{article}\n\\begin{document}\n"
     tex += "\\begin{tabular}{l||c|c|c|c||c|c|c|c||}\n"
     tex += "& \\multicolumn{4}{c||}{Results on Training Set} & \\multicolumn{4}{c||}{Results on Test Set}\\\\ \n"
