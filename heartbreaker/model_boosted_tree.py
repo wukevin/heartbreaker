@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import sklearn
 from sklearn.model_selection import train_test_split, cross_validate, KFold
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 from sklearn.utils import class_weight
 
 import xgboost
@@ -138,6 +138,7 @@ def eval_on_test_set(booster='gbtree', lr=0.1, max_depth=6, min_child_weight=1, 
     logging.info("Test Precision: {}".format(precision_score(y_test, preds)))
     logging.info("Test Recall: {}".format(recall_score(y_test, preds)))
     logging.info("Test F1 score: {}".format(f1_score(y_test, preds)))
+    logging.info("Confusion matrix:\n{}".format(confusion_matrix(y_test, preds)))
 
 def eval_on_train_set(booster='gbtree', lr=0.1, max_depth=6, min_child_weight=1, n_estimators=150, reg_alpha=10):
     """The params in the above are from expanded grid search"""
@@ -198,4 +199,4 @@ if __name__ == "__main__":
     # parameter_sweep_pipeline()
     eval_on_train_set()
     eval_on_test_set()
-    feature_importance()
+    # feature_importance()
